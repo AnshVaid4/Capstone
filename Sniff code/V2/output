@@ -1,21 +1,36 @@
 Source IP:  192.168.43.6
-Source UDP Port:  61193
-UDP:  Ether / IP / UDP 192.168.43.6:61193 > 239.255.255.250:ssdp / Raw
-Source IP:  192.168.43.6
-Source UDP Port:  53236
-UDP:  Ether / IP / UDP 192.168.43.6:53236 > 142.250.183.170:https / Raw
-Source IP:  192.168.43.6
-Source UDP Port:  53236
-UDP:  Ether / IP / UDP 192.168.43.6:53236 > 142.250.183.170:https / Raw
-Source IP:  142.250.183.170
-Source UDP Port:  443
-UDP:  Ether / IP / UDP 142.250.183.170:https > 192.168.43.6:53236 / Raw
-Source IP:  142.250.183.170
-Source UDP Port:  443
-UDP:  Ether / IP / UDP 142.250.183.170:https > 192.168.43.6:53236 / Raw
-Source IP:  142.250.183.170
-Source UDP Port:  443
-UDP:  Ether / IP / UDP 142.250.183.170:https > 192.168.43.6:53236 / Raw
-Source IP:  192.168.43.6
-Source UDP Port:  53236
-UDP:  Ether / IP / UDP 192.168.43.6:53236 > 142.250.183.170:https / Raw
+Source TCP Port:  53833
+TCP:  Ether / IP / TCP 192.168.43.6:53833 > 49.44.161.138:https A / Raw
+['Ether', 'IP', 'TCP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 41
+     id        = 49725
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = tcp
+     chksum    = 0x7a2c
+     src       = 192.168.43.6
+     dst       = 49.44.161.138
+     \options   \
+###[ TCP ]### 
+        sport     = 53833
+        dport     = https
+        seq       = 660896957
+        ack       = 3721269094
+        dataofs   = 5
+        reserved  = 0
+        flags     = A
+        window    = 254
+        chksum    = 0x8b15
+        urgptr    = 0
+        options   = []
+###[ Raw ]### 
+           load      = '\x00'
