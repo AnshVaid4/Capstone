@@ -1,17 +1,29 @@
-import scapy.all as scapy
+from scapy.all import *
 
 def process_packet(packet):
-    original=packet.summary()
-    packet=original.split(" ")
+    packetlist=packet.summary().split(" ")
+    if IP in packet:                                    #IP is scapy packet obj #name 'ip' is not defined
+        ip_src=packet[IP].src
+        print("Source IP: ",ip_src)
+
     try:
-        p=packet.index("TCP")
-        #print(" ".join(packet))
-        if IP in original:
-            print(original.src)
+        if TCP in packet:
+            tcp_sport=packet[TCP].sport
+            print("Source TCP Port: ",tcp_sport)
+        else:                                           #IndexError: Layer [UDP] not found
+            udp_sport=packet[UDP].sport
+            print("Source UDP Port: ",udp_sport)
     except:
-        print("\n",original)
+        None
+    
+    try:
+        if packetlist.index("TCP"):
+            print("TCP: ",packet.summary())
+    except:
+        print("UDP: ",packet.summary())
+    
         
-capture=scapy.sniff(prn=process_packet, store=False)
+capture=sniff(prn=process_packet, store=False)
 
 
 
