@@ -1,0 +1,42 @@
+Source IP:  192.168.43.6
+Destination IP:  239.255.255.250
+UDP:  Ether / IP / UDP 192.168.43.6:53182 > 239.255.255.250:ssdp / Raw
+###[ Ethernet ]### 
+  dst       = 01:00:5e:7f:ff:fa
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 165
+     id        = 48352
+     flags     = 
+     frag      = 0
+     ttl       = 4
+     proto     = udp
+     chksum    = 0x1dbf
+     src       = 192.168.43.6
+     dst       = 239.255.255.250
+     \options   \
+###[ UDP ]### 
+        sport     = 53182
+        dport     = ssdp
+        len       = 145
+        chksum    = 0x59da
+###[ Raw ]### 
+           load      = 'M-SEARCH * HTTP/1.1\r\nHost: 239.255.255.250:1900\r\nST: urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\nMan: "ssdp:discover"\r\nMX: 3\r\n\r\n'
+
+0000  01 00 5E 7F FF FA 3C 91 80 88 4E 73 08 00 45 00  ..^...<...Ns..E.
+0010  00 A5 BC E0 00 00 04 11 1D BF C0 A8 2B 06 EF FF  ............+...
+0020  FF FA CF BE 07 6C 00 91 59 DA 4D 2D 53 45 41 52  .....l..Y.M-SEAR
+0030  43 48 20 2A 20 48 54 54 50 2F 31 2E 31 0D 0A 48  CH * HTTP/1.1..H
+0040  6F 73 74 3A 20 32 33 39 2E 32 35 35 2E 32 35 35  ost: 239.255.255
+0050  2E 32 35 30 3A 31 39 30 30 0D 0A 53 54 3A 20 75  .250:1900..ST: u
+0060  72 6E 3A 73 63 68 65 6D 61 73 2D 75 70 6E 70 2D  rn:schemas-upnp-
+0070  6F 72 67 3A 64 65 76 69 63 65 3A 49 6E 74 65 72  org:device:Inter
+0080  6E 65 74 47 61 74 65 77 61 79 44 65 76 69 63 65  netGatewayDevice
+0090  3A 31 0D 0A 4D 61 6E 3A 20 22 73 73 64 70 3A 64  :1..Man: "ssdp:d
+00a0  69 73 63 6F 76 65 72 22 0D 0A 4D 58 3A 20 33 0D  iscover"..MX: 3.
+00b0  0A 0D 0A                                         ...
+==============================================
