@@ -1,6 +1,539 @@
 Source IP:  192.168.43.6
-Source TCP Port:  53833
-TCP:  Ether / IP / TCP 192.168.43.6:53833 > 49.44.161.138:https A / Raw
+Source UDP Port:  59123
+UDP:  Ether / IP / UDP / DNS Qry "b'ssl.gstatic.com.'" 
+['Ether', 'IP', 'UDP', 'DNS']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 61
+     id        = 58703
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7e08
+     src       = 192.168.43.6
+     dst       = 192.168.43.1
+     \options   \
+###[ UDP ]### 
+        sport     = 59123
+        dport     = domain
+        len       = 41
+        chksum    = 0xb60b
+###[ DNS ]### 
+           id        = 22699
+           qr        = 0
+           opcode    = QUERY
+           aa        = 0
+           tc        = 0
+           rd        = 1
+           ra        = 0
+           z         = 0
+           ad        = 0
+           cd        = 0
+           rcode     = ok
+           qdcount   = 1
+           ancount   = 0
+           nscount   = 0
+           arcount   = 0
+           \qd        \
+            |###[ DNS Question Record ]### 
+            |  qname     = 'ssl.gstatic.com.'
+            |  qtype     = A
+            |  qclass    = IN
+           an        = None
+           ns        = None
+           ar        = None
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  59123
+UDP:  Ether / IP / UDP / DNS Qry "b'ssl.gstatic.com.'" 
+['Ether', 'IP', 'UDP', 'DNS']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 61
+     id        = 58704
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7e07
+     src       = 192.168.43.6
+     dst       = 192.168.43.1
+     \options   \
+###[ UDP ]### 
+        sport     = 59123
+        dport     = domain
+        len       = 41
+        chksum    = 0xb60b
+###[ DNS ]### 
+           id        = 22699
+           qr        = 0
+           opcode    = QUERY
+           aa        = 0
+           tc        = 0
+           rd        = 1
+           ra        = 0
+           z         = 0
+           ad        = 0
+           cd        = 0
+           rcode     = ok
+           qdcount   = 1
+           ancount   = 0
+           nscount   = 0
+           arcount   = 0
+           \qd        \
+            |###[ DNS Question Record ]### 
+            |  qname     = 'ssl.gstatic.com.'
+            |  qtype     = A
+            |  qclass    = IN
+           an        = None
+           ns        = None
+           ar        = None
+
+==============================================
+Source IP:  192.168.43.1
+Source UDP Port:  53
+UDP:  Ether / IP / UDP / DNS Ans "142.250.199.163" 
+['Ether', 'IP', 'UDP', 'DNS']
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 108
+     id        = 16321
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7873
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 88
+        chksum    = 0x2348
+###[ Raw ]### 
+           load      = '\\xde\x00\x00\x00\x01\x089\x1a\\xd5Mʑ^#\x00@?)\x16@\\x81R\\xa2e\x1c\\\\x93\\xa8\x1c\\xb3+\\xd76\\xa9@\\xc7O\\x9f\\xbde\\xa0s\\xbb\\xaab\x1e)\\xbb!\\x8cb\\xc7\x11T$E\x15\\xa6\\xd0(TN+\x05\\xad[\x15`\\xfb\\xbfϵ\\xff\\xbbV\\x88\\x9c\\xd7)W'
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 526
+     id        = 16322
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x76d0
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 506
+        chksum    = 0x7588
+###[ Raw ]### 
+           load      = '\\xdf\x00\x00\x00\x01\x089\x1a\\xd5Mʑ^#\x00Aᜱ\x0b+\\x9a\\xb3\\x9f\\xa7\\x9c\\x87\\xb1\x0eYO\\xa9\\xe3\\x80#\\xe2#3\\xc7\x02\\x92\\xa5#\\xea\\xd1\\xec\\xf8\\xfe<P/\x0e\\xf6\\x97\'\x1d\\x90\x08l"@w\\xff\\xab\\xbf\\x95 *3\\x86\n\\xe5ҩ\t\\x9dt.\\xccp\\x8f\\xa8y\\xb1\\xd1Lh\x1e\\xb8\\xb1ǅUpMA\\xc45Q!\\x86Z\\xd91l8\x17\\x94㸶\\xdd=\\xf7\\x86+\\xde˷\\xd7?I\\xf6\\xbc\\xb1f\\xe5u1z\\xbc\\x83+\\x81\\xedx p\\x82L\\xd73\\xfe\\xeeR\\x8f\x01wQe^\x1d\\xf8f\\x86b\\xde\\xccYL\\xc4\x17`\\xcb\\xe81o\x11\\x85\\xf5\\xf2&\\xae\\xdeҴ\x1f\\xeap\\xef\\xb4\\xd8\\xd1\\xed-\\xe2\\xe7Q0\'L\x1f\\xd8;\\xa2+\\x96\\x84\\xfeCM_\\xe6\\xa6TPDUZtV\\xf3\x015ޣ\\xe1V\\xdf@\x08\\xaaZ\\x99k\\xc2\\xfe\\xce\x0cq\\x8e\\x8f\\xdeY8\\xc1\\xe1\\xeeC\\xbc,+\x14RfK\x06\\xff09\\xe7\\xa6L0\\xbe\\x90V\\xeb\t\\xae(\\xa7s\\xb2O\\x95f\\x80\x08W\\x9d4\\xa2\\xe2j\\x94n\x0e\x01\\x9a\\x86\x04%(\\xabHC\\x86\\x93\x1e\\xbeCe\\xb4u\\x8a\\xb7Y^\x1b\\xbb\\xbeA\\xa1\\xd5[\\xad\x14\\x96\\xaa\\xde\\xf0\\xb9F\\xe9kޡ\\x8d\\\\xfc*\\xcf\\xd6\x05UѬu\x15\\x92\\xc4\\xf5 \\xfaĕ<\x05W\\x8d\\xb1xʙ\\xeafbgq2\\xe1([>\\x92\\xdb\\\x0f5$\x13^\\xef}\\xe7\x11/\'\rk0\x1a\\xad\\xbf{s\x1f\x12\\x9aj\\xaf\\xc4y\x15\\xf0\\xb3\n\\xe0U\\xd4\\xfb\\xd1eJ\\x81\\xf0\\xa1F\\xef\x10\\xa4\\xa3t-\\xfa0\\xc7\\xfa\\xab]..\\xd7X\\xb6\\x95Ă\\xa2\\x98\\xcfW\\xa4/\\xd0D|\\xb7\\xaeVO\\xa1\\xf8\\xb0\\xf6~0Np\\xd5\\xc3#ȬGax\x06[$J"z\\x96/\\x81\\xf0;X^L@\\xb0b\\xc4\\xe4;/\\xf6\\x8b\\x80\\xc3f\x18\\xf9\x11\\xd1x+\\xae\\x98u\x1e\\xb6ӻ\\xe6\\xa627\\xfbc%-\\xa7\\x8b\\xf3'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 650
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x3ef
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 630
+        chksum    = 0x9f90
+###[ Raw ]### 
+           load      = '_\\x92\\xf1ѭ\\x80\\xb0\\xd3\'\\xe2\\xceUޢ2)\x12\\x9a\x16\\x9d\\xa6\\xbe\\xb7\\xfd\\xae\\xe0xuʹ\\xc7\\xec\\xe8u4\x19\\x8d\x17Aڗ1\\xber\\xba\\xa2\\xecJ\\xe8Ϲ\x0cV\x08\\x9f\\xf9\\xb7\\xc6qi\\xd7\\xe0\\x89\\x94.\\xc6pų\\x94\\xfa~\\x98\\xf1\x02;\\xf2n\\xd2c1\x18\n\\xe9/\\x82\x1ci\\xaaF\x16`\x07\x104\\xea#@Ƙ/\\xbfY\\xe2\x17,\\x8a9](\\xe8k\x149Ou\\x86I\\xbf;\\xa6Z1#\\xfa÷u\\x8a6\\xc3\\xe04\\xbe\\xa2\\xc2yex\\xdb9[\\xf8>\\xb6o}\\xc0\\xb13x\x13m\\xaf}(hWmC\t\\xe3\'\x17ε\\xb6y\\x8e\\xb6\\xb0L\\xaeĸr\\x82\\xe0H\\x92\\x9d&\\xbf\\xcf0\\xecR\x13\\xe2\\xf2Ǯ\\xd7pT\x08\\xcd\\xd9\x10\\xd7~\x15r\r\\xe3z\x0e6\\x83\x0bB*\\xb1\\xcau0\\xc6L\x14$ɷ\x14I3\\xf0\\xd05s\x13\\xccQV\\xb5yɮ\\xceZ\x1dX]k%\\xf7\\xc9.$\\xd8~,\\xf5\\xd1^\\xb2G\\xd0\x11\\xff8L\\xcf/nL\\xed\\x90-\\xaf\\xad\\xe2d\x07\\xf0\\x9dA\\xbe\\x9dh\\xdf9=\\x99\\xb4:(n\\x91\x108Չ\\xcd\\xfd\\xbd\td\\xceܜr\x18\x07L\\x84\\xe4\\xb1%\\x86\\xac$\\xcf\x04@p\\xe5\\xfe\\x85\\xa4H\\x96\\xd0N\x18\x0b\\xd7<\\xfbt!\\x98\\xce\\xefџ\\x89\x12\\xb6Y\\xd7F\\xb0Z\\xa8\\xfd\\xfa\x1b\\xc1;\x0c\\xc6W\x14\\xe3\\xd2-\\x96`\\xb5_\\xf5WUa\\xcaQ"\\/\\xb4\\x8a\x02^\\xa9\\/^\x12u\\xa0IY\\xd3(\\xa6ˢ\\x94%\x15\\xc9ܴD\\xf7?\\xefC\x14qqئ\x0f\\x86H\\xe1\x03\x12E)1|\\xd6\x19\\x8c\\xc0A\\xf3t\\xeb!\\xd0\\xe6\\xf3%7/\\xbc1g-39\\x81PS\\xda\\xef\\xb8\\xe3\\xb1\n@z\x15\\x8dv\x192\\xf8\\xcbS\x7fP\\xa5\x023|\x02A?\x17\\x99˭\\xfev50`\\xb9\\x90-\\xb3\\xa45gmI\\xca\\xf1\\xb0\\\\xedo\\x99\\xce\x16\\xc7\\xdav\\xb5w0\\xf4\\xf4\\xb2)i\\xf3\x10\\xc3+\\xf1u\x11v\\xc5-58\x0b{\\xbb=\\xdeZp/\\x82xJ\\xf2\\xc1\x16X\\xff{q!\x15\x033/^w\\xb0I:AN\\xc0\\xceA\x06\\xb9k\x15\\xcd\\xfe\x0fA\\xb8V\\xe7\x08-]x͐\\xd5?n~Ωl\\xc4|j!\\xd6n5~\\xc2x\\xf7\\x85Y\\x81m\'\\x96\\xaa\x0b\\xa8\\xddr\\xa8~\\xab\\x99\\xa6_8\\x9b\x06\x7f\\x85&\x02\\xf2\\xbe,\\x80\x1b콫P\\x9bFzn\t4>%\\xe1'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 54
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x643
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 34
+        chksum    = 0x2ff3
+###[ Raw ]### 
+           load      = 'UUa\\xeb\\xf5\\xe90\\x80h\\xb0\\xd5\x03H\\x87\\xb8\\xb1\x1a\\xb8\\xa4r\\xef\x03\\xf5\x16\\xf2\x1a'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 53
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x644
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 33
+        chksum    = 0xc3d9
+###[ Raw ]### 
+           load      = 'Dl\\x92\\x9c*\\xc1\\x9c]\\x8b$\\xc7dG8W\x0b\x08\\xe4\\xf7\\x81\t\\xd6)\\xe3['
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 139
+     id        = 16323
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7852
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 119
+        chksum    = 0x7e6f
+###[ Raw ]### 
+           load      = '\\xe2\x00\x00\x00\x01\x089\x1a\\xd5Mʑ^#\x00@=\x17\\xfc\\x8c\\xa8\\Y\\xbaj2\x04\x11\\xfa\\xe4Ѳ\\xa8\\xf2\\x88/\\x93\\xd1\\xe5-\x07\x18U\\xbb\\xf3\\xad\\xa2֓;\\xc7\\xff\\xa4\\xd2\\xcd\x05\\xaf\\x95b\\xcd\\xe2>\\xb2\\x90\\xbf\\xb3\\xd1\\xd3P\\xe5\x02\x17\\xa6\n\\x80|O[H9\x1a\\xd5Mʑ^#!\\x8d!\\xe5\\xda\n\x0e\\xabԚH#ծO\\xd8l\\xa0\\xef\x0f#\x0c\\x8a\\xd6'
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 61
+     id        = 16324
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x789f
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 41
+        chksum    = 0x95b1
+###[ Raw ]### 
+           load      = '_9\x1a\\xd5Mʑ^#\\x9a\\xafu٪ʺt6@ \\x9c\x081\\xb9-\\xff3\\xc35A\\xeebt'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 649
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x3f0
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 629
+        chksum    = 0x8203
+###[ Raw ]### 
+           load      = 'H\\xdcNE\\xf5#"\\x8f$U\\xc8\x1at\\xd1\rE)\\xf2\\xdf\x0e/\\xa9巅\x8f\\xbb뷬?\\xa7.m\\xd7\x1d\\xc4K\x0eW\\xfbc\\xd9\x19\\x8dB\x02\\x9f\\x8c\\x90\\xc1R\\xad\\x9f-\\xd7s\\xf9\x1e\\xe2\u07bbc\\xd2\x11\x17\\xbf\\x88\\x9f[x\\xf7\\xfaʭ5w\x17\\xf6\\xec\\xf2\\x98!U/\\xe8h%\\xfc\x1a!\\xda%\\x9bq\\x8f\x04\\x8f\x1bR\\xd45N\\xbct\\xca\r\x1d\\xdc%3\\xc0ج\\x92!k\\xccX\x02\x03\t\\xa1\x01\x08\\x88\'\\xc7e\\xd525\\xca9\\x84\x07R3\\xf9\\x9b\\xadǣ\\xc9\x12\\xde9\\xeaC\x0eBb-\\xf4nk\x7f\\x93\\xf1\x1d\\xf8\\xd8˜\\xd2?\\xe7Y\\x94IJ\\xb1\\xafg\\xfa\\xc7\\xc7\x00,\\xd3[\x04\x11%\\x9d\x19H\\xe5b \x01\\xf1u\\xfc\x04\\x88Ζ\\xa4(\\xd7T\x03\x0c#\\xbf\\x8d\\xf2U\\xbb\\xb1\\xf0s\\xf6M\\xe3α<J\x06\rE\\xb5A\x19\x00\x03\\x97J\\xcaS\\xc0NȦj\\x88c\\xa2\\x98\\xff\\xad\x1e\\xdb\\xcb\\xc7\\xf4\\xd9\x12Cu\\xeeHM1\n\r\\xdb\\xef"\\xfb\x1c\\x8a\\xfa\\x8dt\\x91\x15\\xb9R\\xadl\\xd5^\\xd79\\xf4E\'\\\\xba\\xa4:B\x14\x15\r=B\\x97Z8.E\\xfe\x12\\xee\\xe9\\xaf\\xe1D*\\xee"\\xaa\rRU\\xd2.\\xdd\\xec\x148\\xf1X?\\xd5fu\\x8b\\xaa\\xf1!\\x89ͦ#\\xbd\\xc0\\xeeͷ\\xf9\x04\x17\\x85w\\xfe\\xf0Ɔ\\xceR\\xb9\\xfa8\\xfe\te\\xb3\\x89\\x92\\x8d\\x88\\x94\x00\\xc3w\x03,\\xff\uf779\\x9a\x13[Vv\\xffK\\xe1\\xac\\xf9\\x8bu\\xf8\\x9f\\xc71\x10&ܥ\\xfd\\x80\\xff%T\\x92\x07\\xd4\x0e\\xd49\\xaal\x7f`9|\\xfd#\\x96\\x84EZ\\x84?\\x8f\\xfcЪ\\x92\\xc0\x1f\\xfc\x02\\xe9\\xec\\xc5Z\\xd2f\x0b͗(\\xbb\\xc2\\xc4L\x12\\xb0\\xf1D*\x17E\\xa5\x01>\\xf4+\x0e\\xd7\x02\x0e\x1f\x18o\\x8b\\xe9h\x1cf\\xdaU\\x99=t!\x01\\xf3/\\x90\\xe3\\x96Z\x1d2>\\x99H\\x8d\\xf7\\xa3\\xa6-\\xc5\\xe4\\xb9{ymw\\x92(\x02T\\xf1!\x18\\xa0=\\xbeD\\xffdm\\xfdm\\xc4\\xca\\xc5:c\\xb6\\xbb\\xc4\\xf3\\x9a\\xe56q3\\xeaT\\x99\x0c6q\x01=磊/\\xb3\\xd8)\\x93\\xffu\\xe4\\xdeQ<ʁ\\xd8JD\\xbf߳\x15\\x84@\\xec\\xe6\x03\\xd4\\xc8\x0bv\\xf5E\\x9f\\xed\\x9f\x1cG3qb\\xf7\\x85I#\x02H\\xab\\xe2\x10\\xaf\\xb7\\xe1D7}}\\xa6\\xf1\\xcc\\xc9\\xed\\xbb\\xf1\\x89\\x8d\x1f)\\xffĵ\x0f\\x9f\\xe3i\\xe4\\xf5=\r6SqP2a\\xfd\x15I\\x9d;F\\xbcQ'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 54
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x643
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 34
+        chksum    = 0xc08d
+###[ Raw ]### 
+           load      = '[S\\x8a\\xa4\\xc6\x03\\xc8@\\xe7\\x83J\x1aݯ\\xc3>J?\\xf2\x14[\\xc8\\xdflc\x0b'
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 63
+     id        = 16325
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x789c
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 43
+        chksum    = 0xe1a1
+###[ Raw ]### 
+           load      = 'C9\x1a\\xd5Mʑ^#\\xdb\x1cRFa$m\\xb1\\xa2l$\\x93\\xdbj\\x80\\x9eB\\xfe[\\x97\\x83r/x\\x8f\\xdd'
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 132
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x5f5
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 112
+        chksum    = 0x4576
+###[ Raw ]### 
+           load      = 'S\\xddN\\xe4\\x8a|\\x9c\\x918\\xed\\xe1G\\xe4\\xbbϯ\x14\\xd5Rz\\xccQXh\\xf5\\xf4He\\xed\\xb3\x16|f{j\x05\\x9a1;\\x96{Y\\x8a-].z\\xa4\\xa6\x05\\xc8\x0f\\xe1ٲ/\\xe2=\\xb3-9\\x9a-\\xf3\\xb0b\\x8b\\xefz1\\xce%\\xd3j\\xa0\\xbe\\xea#\\xff\\xfȁ\\xcdk\\xdcm"\\xca]j\\x96Y\x07jE8\\xfb\\xe1FK\\xfc\\xe4\\xb6|'
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  55734
+UDP:  Ether / IP / UDP 192.168.43.6:55734 > 142.250.199.163:https / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 61
+     id        = 16326
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x789d
+     src       = 192.168.43.6
+     dst       = 142.250.199.163
+     \options   \
+###[ UDP ]### 
+        sport     = 55734
+        dport     = https
+        len       = 41
+        chksum    = 0x9316
+###[ Raw ]### 
+           load      = "Y9\x1a\\xd5Mʑ^#MՎ\\xc3B\\xaf\x08\x19\\xe6\\xc0\\xa1,\\x81`|\\xeaF\\xfa\\xeb\\x91N'a\\x8b"
+
+==============================================
+Source IP:  142.250.199.163
+Source UDP Port:  443
+UDP:  Ether / IP / UDP 142.250.199.163:https > 192.168.43.6:55734 / Raw
+['Ether', 'IP', 'UDP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 53
+     id        = 0
+     flags     = DF
+     frag      = 0
+     ttl       = 50
+     proto     = udp
+     chksum    = 0x644
+     src       = 142.250.199.163
+     dst       = 192.168.43.6
+     \options   \
+###[ UDP ]### 
+        sport     = https
+        dport     = 55734
+        len       = 33
+        chksum    = 0x8592
+###[ Raw ]### 
+           load      = ']E/\\x9b]\\x874֮\\xd4T\x03m\\xd1|6__\\xd8Ԧ\\xf9}\x0e\\xf4'
+
+==============================================
+Source IP:  192.168.43.6
+Source TCP Port:  53815
+TCP:  Ether / IP / TCP 192.168.43.6:53815 > 185.184.8.65:https A / Raw
 ['Ether', 'IP', 'TCP']
 ###[ Ethernet ]### 
   dst       = be:ff:eb:a2:0e:00
@@ -11,26 +544,378 @@ TCP:  Ether / IP / TCP 192.168.43.6:53833 > 49.44.161.138:https A / Raw
      ihl       = 5
      tos       = 0x0
      len       = 41
-     id        = 49725
+     id        = 9104
      flags     = DF
      frag      = 0
      ttl       = 128
      proto     = tcp
-     chksum    = 0x7a2c
+     chksum    = 0x2997
      src       = 192.168.43.6
-     dst       = 49.44.161.138
+     dst       = 185.184.8.65
      \options   \
 ###[ TCP ]### 
-        sport     = 53833
+        sport     = 53815
         dport     = https
-        seq       = 660896957
-        ack       = 3721269094
+        seq       = 1614969055
+        ack       = 3244637786
         dataofs   = 5
         reserved  = 0
         flags     = A
-        window    = 254
-        chksum    = 0x8b15
+        window    = 252
+        chksum    = 0x545b
         urgptr    = 0
         options   = []
 ###[ Raw ]### 
            load      = '\x00'
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  58955
+UDP:  Ether / IP / UDP / DNS Qry "b'google.com.'" 
+['Ether', 'IP', 'UDP', 'DNS']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 56
+     id        = 58705
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7e0b
+     src       = 192.168.43.6
+     dst       = 192.168.43.1
+     \options   \
+###[ UDP ]### 
+        sport     = 58955
+        dport     = domain
+        len       = 36
+        chksum    = 0xad8c
+###[ DNS ]### 
+           id        = 32903
+           qr        = 0
+           opcode    = QUERY
+           aa        = 0
+           tc        = 0
+           rd        = 1
+           ra        = 0
+           z         = 0
+           ad        = 0
+           cd        = 0
+           rcode     = ok
+           qdcount   = 1
+           ancount   = 0
+           nscount   = 0
+           arcount   = 0
+           \qd        \
+            |###[ DNS Question Record ]### 
+            |  qname     = 'google.com.'
+            |  qtype     = A
+            |  qclass    = IN
+           an        = None
+           ns        = None
+           ar        = None
+
+==============================================
+Source IP:  192.168.43.6
+Source UDP Port:  58955
+UDP:  Ether / IP / UDP / DNS Qry "b'google.com.'" 
+['Ether', 'IP', 'UDP', 'DNS']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 56
+     id        = 58706
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = udp
+     chksum    = 0x7e0a
+     src       = 192.168.43.6
+     dst       = 192.168.43.1
+     \options   \
+###[ UDP ]### 
+        sport     = 58955
+        dport     = domain
+        len       = 36
+        chksum    = 0xad8c
+###[ DNS ]### 
+           id        = 32903
+           qr        = 0
+           opcode    = QUERY
+           aa        = 0
+           tc        = 0
+           rd        = 1
+           ra        = 0
+           z         = 0
+           ad        = 0
+           cd        = 0
+           rcode     = ok
+           qdcount   = 1
+           ancount   = 0
+           nscount   = 0
+           arcount   = 0
+           \qd        \
+            |###[ DNS Question Record ]### 
+            |  qname     = 'google.com.'
+            |  qtype     = A
+            |  qclass    = IN
+           an        = None
+           ns        = None
+           ar        = None
+
+==============================================
+Source IP:  185.184.8.65
+Source TCP Port:  443
+TCP:  Ether / IP / TCP 185.184.8.65:https > 192.168.43.6:53815 A
+['Ether', 'IP', 'TCP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x28
+     len       = 40
+     id        = 20743
+     flags     = DF
+     frag      = 0
+     ttl       = 47
+     proto     = tcp
+     chksum    = 0x4cf9
+     src       = 185.184.8.65
+     dst       = 192.168.43.6
+     \options   \
+###[ TCP ]### 
+        sport     = https
+        dport     = 53815
+        seq       = 3244637786
+        ack       = 1614969056
+        dataofs   = 5
+        reserved  = 0
+        flags     = A
+        window    = 501
+        chksum    = 0x5362
+        urgptr    = 0
+        options   = ''
+
+==============================================
+Source IP:  192.168.43.1
+Source UDP Port:  53
+UDP:  Ether / IP / UDP / DNS Ans "142.250.67.206" 
+['Ether', 'IP', 'UDP', 'DNS']
+
+==============================================
+Source IP:  192.168.43.6
+UDP:  Ether / IP / ICMP 192.168.43.6 > 142.250.67.206 echo-request 0 / Raw
+['Ether', 'IP', 'ICMP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 60
+     id        = 31588
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = icmp
+     chksum    = 0xe6
+     src       = 192.168.43.6
+     dst       = 142.250.67.206
+     \options   \
+###[ ICMP ]### 
+        type      = echo-request
+        code      = 0
+        chksum    = 0x4d52
+        id        = 0x1
+        seq       = 0x9
+        unused    = ''
+###[ Raw ]### 
+           load      = 'abcdefghijklmnopqrstuvwabcdefghi'
+
+==============================================
+Source IP:  142.250.67.206
+UDP:  Ether / IP / ICMP 142.250.67.206 > 192.168.43.6 echo-reply 0 / Raw
+['Ether', 'IP', 'ICMP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x60
+     len       = 60
+     id        = 0
+     flags     = 
+     frag      = 0
+     ttl       = 110
+     proto     = icmp
+     chksum    = 0x8dea
+     src       = 142.250.67.206
+     dst       = 192.168.43.6
+     \options   \
+###[ ICMP ]### 
+        type      = echo-reply
+        code      = 0
+        chksum    = 0x5552
+        id        = 0x1
+        seq       = 0x9
+        unused    = ''
+###[ Raw ]### 
+           load      = 'abcdefghijklmnopqrstuvwabcdefghi'
+
+==============================================
+Source IP:  192.168.43.6
+UDP:  Ether / IP / ICMP 192.168.43.6 > 142.250.67.206 echo-request 0 / Raw
+['Ether', 'IP', 'ICMP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 60
+     id        = 31589
+     flags     = 
+     frag      = 0
+     ttl       = 128
+     proto     = icmp
+     chksum    = 0xe5
+     src       = 192.168.43.6
+     dst       = 142.250.67.206
+     \options   \
+###[ ICMP ]### 
+        type      = echo-request
+        code      = 0
+        chksum    = 0x4d51
+        id        = 0x1
+        seq       = 0xa
+        unused    = ''
+###[ Raw ]### 
+           load      = 'abcdefghijklmnopqrstuvwabcdefghi'
+
+==============================================
+Source IP:  142.250.67.206
+UDP:  Ether / IP / ICMP 142.250.67.206 > 192.168.43.6 echo-reply 0 / Raw
+['Ether', 'IP', 'ICMP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x60
+     len       = 60
+     id        = 0
+     flags     = 
+     frag      = 0
+     ttl       = 110
+     proto     = icmp
+     chksum    = 0x8dea
+     src       = 142.250.67.206
+     dst       = 192.168.43.6
+     \options   \
+###[ ICMP ]### 
+        type      = echo-reply
+        code      = 0
+        chksum    = 0x5551
+        id        = 0x1
+        seq       = 0xa
+        unused    = ''
+###[ Raw ]### 
+           load      = 'abcdefghijklmnopqrstuvwabcdefghi'
+
+==============================================
+UDP:  Ether / ARP who has 192.168.43.6 says 192.168.43.1
+['Ether', 'ARP']
+###[ Ethernet ]### 
+  dst       = 3c:91:80:88:4e:73
+  src       = be:ff:eb:a2:0e:00
+  type      = ARP
+###[ ARP ]### 
+     hwtype    = 0x1
+     ptype     = IPv4
+     hwlen     = 6
+     plen      = 4
+     op        = who-has
+     hwsrc     = be:ff:eb:a2:0e:00
+     psrc      = 192.168.43.1
+     hwdst     = 00:00:00:00:00:00
+     pdst      = 192.168.43.6
+
+==============================================
+UDP:  Ether / ARP is at 3c:91:80:88:4e:73 says 192.168.43.6
+['Ether', 'ARP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = ARP
+###[ ARP ]### 
+     hwtype    = 0x1
+     ptype     = IPv4
+     hwlen     = 6
+     plen      = 4
+     op        = is-at
+     hwsrc     = 3c:91:80:88:4e:73
+     psrc      = 192.168.43.6
+     hwdst     = be:ff:eb:a2:0e:00
+     pdst      = 192.168.43.1
+
+==============================================
+Source IP:  192.168.43.6
+Source TCP Port:  54295
+TCP:  Ether / IP / TCP 192.168.43.6:54295 > 23.22.22.50:https A / Raw
+['Ether', 'IP', 'TCP']
+###[ Ethernet ]### 
+  dst       = be:ff:eb:a2:0e:00
+  src       = 3c:91:80:88:4e:73
+  type      = IPv4
+###[ IP ]### 
+     version   = 4
+     ihl       = 5
+     tos       = 0x0
+     len       = 41
+     id        = 52925
+     flags     = DF
+     frag      = 0
+     ttl       = 128
+     proto     = tcp
+     chksum    = 0x131b
+     src       = 192.168.43.6
+     dst       = 23.22.22.50
+     \options   \
+###[ TCP ]### 
+        sport     = 54295
+        dport     = https
+        seq       = 3052305216
+        ack       = 761513464
+        dataofs   = 5
+        reserved  = 0
+        flags     = A
+        window    = 254
+        chksum    = 0x9b81
+        urgptr    = 0
+        options   = []
+###[ Raw ]### 
+           load      = '\x00'
+
+==============================================
