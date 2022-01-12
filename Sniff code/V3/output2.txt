@@ -7116,4 +7116,23 @@ UDP:  Ether / IP / UDP 192.168.43.6:51868 > 239.255.255.250:ssdp / Raw
 00a0  69 73 63 6F 76 65 72 22 0D 0A 4D 58 3A 20 33 0D  iscover"..MX: 3.
 00b0  0A 0D 0A                                         ...
 ==============================================
->>> 
+
+
+
+
+==================================DELETED CODE===============================
+
+    layers=packet.layers()              #print the layer names
+    layer=[]                            #list that will contained sanitized layer names only from layers list
+    for i in layers:
+        exp=str(i).replace("'","").replace("<","").replace(">","").replace(" ","")
+        try:                #for layer "RAW"
+            layer.append(exp.split(".")[3])
+        except:
+            pass            #I don't want RAW layer
+
+    print(packet.show(dump=True))       #print layer with values
+    
+    #if packet[IP] != None:
+    #    print(packet[IP].version,packet[IP].src)
+==============================================================================
