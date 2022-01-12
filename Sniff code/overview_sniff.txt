@@ -17,3 +17,4 @@ UDP layer
 srcip
 destip
 
+base64 encoded packet layers to log in db
