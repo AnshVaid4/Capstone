@@ -1,0 +1,19 @@
+source IP //input
+destination IP
+source port //input
+destination port //input
+
+IP layer
+length
+ttl
+protocol
+
+TCP layer
+flags
+srcip
+destip
+
+UDP layer
+srcip
+destip
+
