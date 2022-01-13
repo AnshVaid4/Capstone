@@ -14,9 +14,13 @@ if monsrcip == "":
     
 if monsrcport == "":
     monsrcport="N"
+else:
+    monsrcport=int(monsrcport)
     
 if monhostport == "":
     monhostport="N"
+else:
+    monhostport=int(monhostport)
 
 logpacket="n"
 
@@ -66,10 +70,10 @@ def process_packet(packet):
         destport=packet[TCP].dport
         protocol="TCP"
         flags=packet[TCP].flags
-        if monsrcport != "N" and monsrcport == srcport:
+        if (monsrcport != "N") and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
-        if monhostport != "N" and monhostport == destport:
+        if (monhostport != "N") and (monhostport == destport):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
                                                                     #returns 443 if https
@@ -77,14 +81,14 @@ def process_packet(packet):
         srcport=packet[UDP].sport
         destport=packet[UDP].dport
         protocol="UDP"
-        if monsrcport != "N" and monsrcport == srcport:
+        if (monsrcport != "N") and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
-        if monhostport != "N" and monhostport == destport:
+        if (monhostport != "N") and (monhostport == destport):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
 
-
+    #packet.show()
 
     if logpacket == "y":
         datetime=dt.strftime("%d/%m/%Y %H:%M:%S")
@@ -96,7 +100,7 @@ def process_packet(packet):
         dump=dump.encode("ascii")
         b64enc=base64.b64encode(dump)
 
-        print("Source IP: ",srcip," Destination IP: ",destip,"\nSource port: ",srcport," Destination port: ",destport,"\nPacket length: ",packetlen," Packet TTL ",packetttl,
+        print("\n\nSource IP: ",srcip," Destination IP: ",destip,"\nSource port: ",srcport," Destination port: ",destport,"\nPacket length: ",packetlen," Packet TTL ",packetttl,
               "\nProtocol: ",protocol," Flags ",flags,"\nDate: ",date," Time: ",time,"\n\nBase64 encoded RAW\n",b64enc)
         logpacket="n"
     print("===========================================================================")        
