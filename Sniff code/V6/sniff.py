@@ -1,6 +1,7 @@
 from scapy.all import *
 from ipaddress import *
 import mysql.connector
+from csv import DictWriter
 
 con = mysql.connector.connect(
   host="localhost",
@@ -28,6 +29,7 @@ else:
     monhostport=int(monhostport)
 
 logpacket="n"
+flag=0
 
 if monsrcip != "N":
     ipobj = IPv4Network(monsrcip)
@@ -40,7 +42,7 @@ def process_packet(packet):
     global logpacket
     global totalpackets
     global defaulterpackets
-
+    global flag
     totalpackets+=1
     
     srcip=None
@@ -58,7 +60,15 @@ def process_packet(packet):
     date=None
     time=None
 
-    b64enc=None
+    dt=datetime.now()
+    datetime=dt.strftime("%Y/%m/%d %H:%M:%S")
+    datetime=datetime.split(" ")
+    date=datetime[0]
+    time=datetime[1]
+    datef=dt.strftime("%Y-%m-%d")
+
+    #===========================================================================================================MAIN OPERATIONS
+    
     print("[+]",packet.summary())
     
     if packet.haslayer(IP) and packet[IP] != None:  #IP is scapy packet obj #name 'ip' is not defined
@@ -91,7 +101,7 @@ def process_packet(packet):
         srcport=packet[TCP].sport
         destport=packet[TCP].dport
         protocol="TCP"
-        flags=packet[TCP].flags
+        flags=str(packet[TCP].flags)
         if (monsrcport != "N") and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
@@ -110,25 +120,21 @@ def process_packet(packet):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
 
+    #===========================================================================================================IF DEFAULTER
 
     if logpacket == "y":
         defaulterpackets+=1
-        dt=datetime.now()
-        datetime=dt.strftime("%Y/%m/%d %H:%M:%S")
-        datetime=datetime.split(" ")
-        date=datetime[0]
-        time=datetime[1]
         
         hexdump(packet)
 
         print("\n\nSource IP: ",srcip," Destination IP: ",destip,"\nSource port: ",srcport," Destination port: ",destport,"\nPacket length: ",packetlen," Packet TTL: ",packetttl," OS: ",os,
-              "\nProtocol: ",protocol," Flags: ",flags,"\nDate: ",date," Time: ",time)
+              "\nProtocol: ",protocol," Flags: ", flags,"\nDate: ",date," Time: ",time)
 
         insQuery= ("insert into packet"
-        "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time, totalpkt, defaulterpkt)"
-        "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time)"
+        "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
-        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time, totalpackets, defaulterpackets)
+        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time)
 
         cursor = con.cursor()
         cursor.execute(insQuery, dataQuery)
@@ -136,6 +142,19 @@ def process_packet(packet):
 
         logpacket="n"
 
+    #===========================================================================================================FILE OPERATIONS
+
+    pkt=(defaulterpackets, totalpackets, date, time)
+    with open(f"{datef}.csv", "a") as file:
+        if flag == 0:
+            headers = ["Defaulter", "Total", "Date", "Time"]
+            csv_writer = DictWriter(file, fieldnames=headers)
+            csv_writer.writeheader()
+            flag=1
+        headers = ["Defaulter", "Total", "Date", "Time"]
+        csv_writer = DictWriter(file, fieldnames=headers)
+        csv_writer.writerow({"Defaulter": pkt[0], "Total": pkt[1], "Date": pkt[2], "Time": pkt[3]})
+    
     print("===========================================================================")        
      
 capture=sniff(prn=process_packet, store=False)
