@@ -144,16 +144,16 @@ def process_packet(packet):
 
     #===========================================================================================================FILE OPERATIONS
 
-    pkt=(defaulterpackets, totalpackets, date, time)
+    pkt=(defaulterpackets, totalpackets,protocol,packetttl,packetlen, date, time)
     with open(f"{datef}.csv", "a") as file:
         if flag == 0:
-            headers = ["Defaulter", "Total", "Date", "Time"]
+            headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time"]
             csv_writer = DictWriter(file, fieldnames=headers)
             csv_writer.writeheader()
             flag=1
-        headers = ["Defaulter", "Total", "Date", "Time"]
+        headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time"]
         csv_writer = DictWriter(file, fieldnames=headers)
-        csv_writer.writerow({"Defaulter": pkt[0], "Total": pkt[1], "Date": pkt[2], "Time": pkt[3]})
+        csv_writer.writerow({"Defaulter": pkt[0], "Total": pkt[1], "Protocol": pkt[2], "TTL": pkt[3], "Length": pkt[4], "Date": pkt[5], "Time": pkt[6]})
     
     print("===========================================================================")        
      
