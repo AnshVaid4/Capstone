@@ -13,10 +13,12 @@ con = mysql.connector.connect(
 monsrcip=input("Enter the IP you want to monitor: ")
 monsrcport=input("Enter the source port you want to monitor: ")
 monhostport=input("Enter the port of your device you want to monitor: ")
+monsrciplist=None
 
 if monsrcip == "":
-    print("[-] IP address cannot be blank")
-    quit()
+    monsrcip="0.0.0.0"
+if "," in monsrcip:
+    monsrciplist=monsrcip.split(",")
     
 if monsrcport == "":
     monsrcport="N"
@@ -31,8 +33,8 @@ else:
 logpacket="n"
 flag=0
 
-if monsrcip != "N":
-    ipobj = IPv4Network(monsrcip)
+#if monsrcip != "N":
+#    ipobj = IPv4Network(monsrcip)
 
 totalpackets=0
 defaulterpackets=0
@@ -40,20 +42,22 @@ defaulterpackets=0
 def process_packet(packet):
     from datetime import datetime
     global logpacket
+    global monsrcip
+    global monsrciplist
     global totalpackets
     global defaulterpackets
     global flag
     totalpackets+=1
     
-    srcip=None
-    destip=None
-    srcport=None
-    destport=None
+    srcip="NULL"
+    destip="NULL"
+    srcport="NULL"
+    destport="NULL"
 
-    packetlen=None
-    packetttl=None
-    protocol=None
-    os=None
+    packetlen="NULL"
+    packetttl="NULL"
+    protocol="NULL"
+    os="NULL"
     
     flags="NULL"
 
@@ -70,7 +74,6 @@ def process_packet(packet):
     #===========================================================================================================MAIN OPERATIONS
     
     print("[+]",packet.summary())
-    
     if packet.haslayer(IP) and packet[IP] != None:  #IP is scapy packet obj #name 'ip' is not defined
         srcip=packet[IP].src
         destip=packet[IP].dst                       #protocol=packet[IP].proto
@@ -84,18 +87,36 @@ def process_packet(packet):
             os="M"
         else:
             os="O"
-        if monsrcip != "N" and ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
-            print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
-            logpacket="y"
+        if monsrcip != "N" and (monsrciplist == None):
+            ipobj = IPv4Network(monsrcip)
+            if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
+                print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
+                logpacket="y"
+        if monsrcip != "N" and (monsrciplist != None):
+            for monsrcip in monsrciplist:
+                #print("\n",monsrcip,"\n")
+                ipobj = IPv4Network(monsrcip)
+                if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
+                    print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
+                    logpacket="y"
+                    break
 
         
     if packet.haslayer(ARP) and packet[ARP] != None:
-       srcip=packet[ARP].psrc
-       destip=packet[ARP].pdst
-       if monsrcip != "N" and ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
-            print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
-            logpacket="y"
-       
+        srcip=packet[ARP].psrc
+        destip=packet[ARP].pdst
+        if monsrcip != "N" and (monsrciplist == None):
+            ipobj = IPv4Network(monsrcip)
+            if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
+                print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
+                logpacket="y"
+        if monsrcip != "N" and (monsrciplist != None):
+            for monsrcip in monsrciplist:
+                ipobj = IPv4Network(monsrcip)
+                if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
+                    print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
+                    logpacket="y"
+                    break
     
     if packet.haslayer(TCP) and packet[TCP] != None:
         srcport=packet[TCP].sport
@@ -129,7 +150,7 @@ def process_packet(packet):
 
         print("\n\nSource IP: ",srcip," Destination IP: ",destip,"\nSource port: ",srcport," Destination port: ",destport,"\nPacket length: ",packetlen," Packet TTL: ",packetttl," OS: ",os,
               "\nProtocol: ",protocol," Flags: ", flags,"\nDate: ",date," Time: ",time)
-
+        
         insQuery= ("insert into packet"
         "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time)"
         "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
