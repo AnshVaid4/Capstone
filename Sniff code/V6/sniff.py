@@ -60,6 +60,7 @@ def process_packet(packet):
     os="NULL"
     
     flags="NULL"
+    comments="NULL"
 
     date=None
     time=None
@@ -92,6 +93,10 @@ def process_packet(packet):
             if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
                 print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
                 logpacket="y"
+                if comments=="NULL":
+                    comments="[IP]"
+                else:
+                    comments=comments+"[IP]"
         if monsrcip != "N" and (monsrciplist != None):
             for monsrcip in monsrciplist:
                 #print("\n",monsrcip,"\n")
@@ -99,6 +104,10 @@ def process_packet(packet):
                 if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
                     print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
                     logpacket="y"
+                    if comments=="NULL":
+                        comments="[IP]"
+                    else:
+                        comments=comments+"[IP]"
                     break
 
         
@@ -110,12 +119,20 @@ def process_packet(packet):
             if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
                 print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
                 logpacket="y"
+                if comments=="NULL":
+                    comments="[IP]"
+                else:
+                    comments=comments+"[IP]"
         if monsrcip != "N" and (monsrciplist != None):
             for monsrcip in monsrciplist:
                 ipobj = IPv4Network(monsrcip)
                 if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
                     print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
                     logpacket="y"
+                    if comments=="NULL":
+                        comments="[IP]"
+                    else:
+                        comments=comments+"[IP]"
                     break
     
     if packet.haslayer(TCP) and packet[TCP] != None:
@@ -126,9 +143,17 @@ def process_packet(packet):
         if (monsrcport != "N") and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
+            if comments=="NULL":
+                comments="[PORT]"
+            else:
+                comments=comments+"[PORT]"
         if (monhostport != "N") and (monhostport == destport):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
+            if comments=="NULL":
+                comments="[PORT]"
+            else:
+                comments=comments+"[PORT]"
                                                                     #returns 443 if https
     if packet.haslayer(UDP) and packet[UDP] != None:                                          #IndexError: Layer [UDP] not found
         srcport=packet[UDP].sport
@@ -137,9 +162,17 @@ def process_packet(packet):
         if (monsrcport != "N") and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
+            if comments=="NULL":
+                comments="[PORT]"
+            else:
+                comments=comments+"[PORT]"
         if (monhostport != "N") and ((monhostport == srcport) or (monhostport == destport)):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
+            if comments=="NULL":
+                comments="[PORT]"
+            else:
+                comments=comments+"[PORT]"
 
     #===========================================================================================================IF DEFAULTER
 
@@ -152,10 +185,10 @@ def process_packet(packet):
               "\nProtocol: ",protocol," Flags: ", flags,"\nDate: ",date," Time: ",time)
         
         insQuery= ("insert into packet"
-        "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time)"
+        "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time, comments)"
         "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
-        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time)
+        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time, comments)
 
         cursor = con.cursor()
         cursor.execute(insQuery, dataQuery)
@@ -165,16 +198,16 @@ def process_packet(packet):
 
     #===========================================================================================================FILE OPERATIONS
 
-    pkt=(defaulterpackets, totalpackets,protocol,packetttl,packetlen, date, time)
+    pkt=(defaulterpackets, totalpackets,protocol,packetttl,packetlen, date, time, comments)
     with open(f"{datef}.csv", "a") as file:
         if flag == 0:
-            headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time"]
+            headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time", "Comments"]
             csv_writer = DictWriter(file, fieldnames=headers)
             csv_writer.writeheader()
             flag=1
-        headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time"]
+        headers = ["Defaulter", "Total","Protocol","TTL","Length", "Date", "Time", "Comments"]
         csv_writer = DictWriter(file, fieldnames=headers)
-        csv_writer.writerow({"Defaulter": pkt[0], "Total": pkt[1], "Protocol": pkt[2], "TTL": pkt[3], "Length": pkt[4], "Date": pkt[5], "Time": pkt[6]})
+        csv_writer.writerow({"Defaulter": pkt[0], "Total": pkt[1], "Protocol": pkt[2], "TTL": pkt[3], "Length": pkt[4], "Date": pkt[5], "Time": pkt[6], "Comments": pkt[7]})
     
     print("===========================================================================")        
      
