@@ -14,6 +14,7 @@ monsrcip=input("Enter the IP you want to monitor: ")
 monsrcport=input("Enter the source port you want to monitor: ")
 monhostport=input("Enter the port of your device you want to monitor: ")
 monsrciplist=None
+monsrcportlist=None
 
 if monsrcip == "":
     monsrcip="0.0.0.0"
@@ -22,6 +23,8 @@ if "," in monsrcip:
     
 if monsrcport == "":
     monsrcport="N"
+elif "," in monsrcport:
+    monsrcportlist=monsrcport.split(",")
 else:
     monsrcport=int(monsrcport)
     
@@ -186,7 +189,7 @@ def process_packet(packet):
         
         insQuery= ("insert into packet"
         "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time, comments)"
-        "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
         dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time, comments)
 
