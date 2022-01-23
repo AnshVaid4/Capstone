@@ -99,7 +99,7 @@ def process_packet(packet):
             os="M"
         else:
             os="O"
-        if monsrcip != "N" and (monsrciplist == None):
+        if monsrcip != "0.0.0.0" and (monsrciplist == None):
             ipobj = IPv4Network(monsrcip)
             if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
                 print("[-]Logged| Source IP: ",srcip," Destination IP: ",destip)
@@ -108,7 +108,7 @@ def process_packet(packet):
                     comments="[IP]"
                 else:
                     comments=comments+"[IP]"
-        if monsrcip != "N" and (monsrciplist != None):
+        if monsrcip != "0.0.0.0" and (monsrciplist != None):
             for monsrcip in monsrciplist:
                 #print("\n",monsrcip,"\n")
                 ipobj = IPv4Network(monsrcip)
