@@ -26,30 +26,49 @@ if "," in monsrcip:
     
 if monsrcport == "":
     monsrcport="N"
-elif "," in monsrcport:
-    monsrcportlist=monsrcport.split(",")
-    if "-" in monsrcportlist:
-        for ports in monsrcportlist:
-            if "-" in ports:
-                minport=int(ports.split("-")[0])
-                maxport=int(ports.split("-")[1])
-                monsrcportlist.append(range(minport,(maxport+1)))
-                monsrcportlist.remove(ports)
-                
+elif "," in monsrcport or "-" in monsrcport:
+    try:
+        monsrcportlist=monsrcport.split(",")
+    except:
+        monsrcportlist=monsrcport.split("-")
+    print(monsrcportlist)
+    monsrcportlist2=[]
+    for ports in monsrcportlist:
+        if "-" in ports:
+            minport=int(ports.split("-")[0])
+            maxport=int(ports.split("-")[1])
+            monsrcportlist.remove(ports)
+            for allport in range(minport,(maxport+1)):
+                monsrcportlist2.append(str(allport))
+    try:
+        for x in monsrcportlist2:
+            monsrcportlist.append(x)
+    except:
+        pass
+    print(monsrcportlist)
 else:
     monsrcport=int(monsrcport)
     
 if monhostport == "":
     monhostport="N"
-elif "," in monhostport:
-    monhostportlist=monhostport.split(",")
-    if "-" in monsrcportlist:
-        for ports in monhostportlist:
-            if "-" in ports:
-                minport=int(ports.split("-")[0])
-                maxport=int(ports.split("-")[1])
-                monhostportlist.append(range(minport,(maxport+1)))
-                monhostportlist.remove(ports)
+elif "," in monhostport or "-" in monhostport:
+    try:
+        monhostportlist=monhostport.split(",")
+    except:
+        monhostportlist=monhostport.split("-")
+    monhostportlist2=[]
+    for ports in monhostportlist:
+        if "-" in ports:
+            minport=int(ports.split("-")[0])
+            maxport=int(ports.split("-")[1])
+            monhostportlist.remove(ports)
+            for allport in range(minport,(maxport+1)):
+                monhostportlist2.append(str(allport))
+    try:
+        for x in monhostportlist2:
+            monhostportlist.append(x)
+    except:
+        pass
 else:
     monhostport=int(monhostport)
 
@@ -253,20 +272,42 @@ def process_packet(packet):
         srcport=packet[UDP].sport
         destport=packet[UDP].dport
         protocol="UDP"
-        if (monsrcport != "N") and (monsrcport == srcport):
+        if (monsrcport != "N") and (monsrcportlist == None) and (monsrcport == srcport):
             print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
             logpacket="y"
             if comments=="NULL":
                 comments="[PORT]"
             else:
                 comments=comments+"[PORT]"
-        if (monhostport != "N") and ((monhostport == srcport) or (monhostport == destport)):
+        if (monhostport != "N") and (monhostportlist == None) and (monhostport == destport):
             print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
             logpacket="y"
             if comments=="NULL":
                 comments="[PORT]"
             else:
                 comments=comments+"[PORT]"
+        if (monsrcport != "N") and (monsrcportlist != None):
+            for port in monsrcportlist:
+                if int(port) == srcport:
+                    print("[-]Logged| Source port: ",srcport," Destination port: ",destport)
+                    logpacket="y"
+                    if comments=="NULL":
+                        comments="[PORT]"
+                        break
+                    else:
+                        comments=comments+"[PORT]"
+                        break
+        if (monhostport != "N") and (monhostportlist != None):
+            for port in monhostportlist:
+                if int(port) == destport:
+                    print("[-]Logged| Destination port: ",destport," Source port: ",srcport)
+                    logpacket="y"
+                    if comments=="NULL":
+                        comments="[PORT]"
+                        break
+                    else:
+                        comments=comments+"[PORT]"
+                        break
 
 
 
