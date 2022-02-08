@@ -2,6 +2,11 @@ from scapy.all import *
 from ipaddress import *
 import mysql.connector
 from csv import DictWriter
+import pyfiglet
+from termcolor import colored
+art = pyfiglet.figlet_format("IDS-Analytics")
+color_art = colored(art, color="green")
+print(art)
 
 con = mysql.connector.connect(
   host="localhost",
