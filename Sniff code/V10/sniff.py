@@ -86,9 +86,9 @@ if(crules == "Y"):
 
 
 
-elif(crules == "N"):
+elif(crules == "N" or crules=="n"):
     l=[]
-    with open('C:\\Users\\Ansh Vaid\\Desktop\\compromised_ip_full.txt','r') as f:
+    with open('compromised_ip_full.txt','r') as f:
         lines = f.readlines()
         for ip in lines:
             l.append(ip.replace("\n",""))
