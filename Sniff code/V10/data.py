@@ -8,7 +8,7 @@ df = pd.concat(map(pd.read_csv, glob.glob(os.path.join('', "*.csv"))))
 df.to_csv('hell.csv',index=False)
 
 df = pd.read_csv('/content/2022-02-10.csv')
-Encoder1 = preprocessing.LabelEncoder()
+Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
 Encoder3=preprocessing.LabelEncoder()
 Encoder4=preprocessing.LabelEncoder()
@@ -22,6 +22,7 @@ def cleandata(data):
     data['DateTime'] = pd.to_datetime(data['DateTime'], format='%d-%m-%Y %H:%M:%S')
   elif(data['DateTime'].values[0].find("/")>-1):
     data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y/%m/%d %H:%M:%S')
+    data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
   data.drop(["Date","Time"],axis=1,inplace=True)
   values = {"Comments": "[SAFE]", "Flags": "NO"}
   data.fillna(value=values,inplace=True)
@@ -34,7 +35,9 @@ def fragment(data):
   data[['Source1','Source2','Source3','Source4']]=df.Sourceip.str.split('.', expand=True)
   data[['dest1','dest2','dest3','dest4']]=df.Destinationip.str.split('.', expand=True)
   data.drop(['Sourceip','Destinationip'],axis=1,inplace=True)
-  data = data.reindex(columns=['DateTime','Source1','Source2','Source3','Source4','dest1','dest2','dest3','dest4','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments'])
+  if("Total" not in data.columns.tolist()):
+    cols=['DateTime','Source1','Source2','Source3','Source4','dest1','dest2','dest3','dest4','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments']
+    data = data.reindex(columns=cols)
   for item in ["1","2","3","4"]:
     feature="Source"+item
     data[feature]=pd.to_numeric(data[feature], downcast='unsigned')
@@ -45,16 +48,18 @@ def fragment(data):
 
 def unfragment(data):
   for item in ["1","2","3","4"]:
-    feature="Source"+item
-    data[feature] = data[feature].astype(str)
-  for item in ["1","2","3","4"]:
     feature="dest"+item
     data[feature] = data[feature].astype(str)
-  data['Source1'].str.cat(data[['Source2','Source3','Source4']], sep='.')
-  data["dest1"].str.cat(data[['dest2','dest3','dest4']], sep='.')
-  #data.drop(['Source2','Source3','Source4','dest2','dest3','dest4'])
+  for item in ["1","2","3","4"]:
+    feature="Source"+item
+    data[feature] = data[feature].astype(str)
+  data["Source1"]=data["Source1"]+"."+data["Source2"]+"."+data["Source3"]+"."+data["Source4"]
+  data["dest1"]=data["dest1"]+"."+data["dest2"]+"."+data["dest3"]+"."+data["dest4"]
+  data.drop(['Source2','Source3','Source4','dest2','dest3','dest4'],axis=1,inplace=True)
   data.rename(columns={'Source1': 'Sourceip', 'dest1': 'Destinationip'}, inplace=True)
-  data = data.reindex(columns=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments'])
+  if("Total" not in data.columns.tolist()):
+    cols=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments']
+    data = data.reindex(columns=cols)
   return data
 
 def labelize(data):
@@ -100,11 +105,10 @@ def genpie(data):
   plt.legend(title = "Packets",bbox_to_anchor =(0.75,0.75))
   plt.show()
 
- 
-
-
-df=cleandata(df)
-df=fragment(df)
-df=labelize(df)
-df=unlabelize(df)
-df=unfragment(df)
+#df=cleandata(df)
+#df=fragment(df)
+#df=labelize(df)
+#df=unlabelize(df)
+#df=unfragment(df)
+#genpie(df)
+#df.head()
