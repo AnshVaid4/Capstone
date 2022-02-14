@@ -1,9 +1,12 @@
-import glob, os    
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
 import seaborn as sns
+import random
+import time
+from datetime import datetime,timedelta
+from scipy import stats
 df = pd.concat(map(pd.read_csv, glob.glob(os.path.join('', "*.csv"))))
 df.to_csv('hell.csv',index=False)
 
@@ -105,10 +108,142 @@ def genpie(data):
   plt.legend(title = "Packets",bbox_to_anchor =(0.75,0.75))
   plt.show()
 
-#df=cleandata(df)
+def dataextrC(dic):
+  key=list(dic.keys())
+  internal_keys= list(dic[key[0]].keys())
+  hour=[]
+  for tup in internal_keys:
+    hour.append(tup[0])
+  hour=list(set(hour))
+  act=dict()
+  for time in hour:
+    val=dict()
+    for value in ["SAFE","PORT","IP","FLAG"]:
+      if ((time,f"[{value}]") in internal_keys):
+        val[f"{value}"]=dic[key[0]][(time,f"[{value}]")]
+        del dic[key[0]][(time,f"[{value}]")]
+      else: val[f"{value}"]=0
+    temp=[]
+    if (len(dic[key[0]])>0):
+      val["MULTIPLE_Com"]=0
+      for multi in internal_keys:
+        temp.append(multi[1])
+      temp=list(set(temp))
+      for hold in internal_keys:
+        if(time==hold[0] and hold[1] in temp and hold[1] not in ["[FLAG]","[IP]","[SAFE]","[PORT]"]):
+           val["MULTIPLE_Com"]=val["MULTIPLE_Com"]+dic[key[0]][(time,hold[1])]
+    else:val["MULTIPLE_Com"]=0
+    act[time]=val
+    del val
+  data=pd.DataFrame.from_dict(act).T
+  return data
+
+def dataextrF(dic):
+  key=list(dic.keys())
+  internal_keys= list(dic[key[0]].keys())
+  hour=[]
+  for tup in internal_keys:
+    hour.append(tup[0])
+  hour=list(set(hour))
+  act=dict()
+  for time in hour:
+    val=dict()
+    for value in ["F","A","P","R","S","U","N"]:
+      if ((time,f"{value}") in internal_keys):
+        val[f"Flag_{value}"]=dic[key[0]][(time,f"{value}")]
+        del dic[key[0]][(time,f"{value}")]
+      else: val[f"Flag_{value}"]=0
+    temp=[]
+    if (len(dic[key[0]])>0):
+      val["Flag_Multi"]=0
+      for multi in internal_keys:
+        temp.append(multi[1])
+      temp=list(set(temp))
+      for hold in internal_keys:
+        if(time==hold[0] and hold[1] in temp and hold[1] not in ["F","A","P","R","S","U","N"]):
+           val["Flag_Multi"]=val["Flag_Multi"]+dic[key[0]][(time,hold[1])]
+    else:val["Flag_Multi"]=0
+    act[time]=val
+    del val
+  data=pd.DataFrame.from_dict(act).T
+  #data.columns=['HOUR','SAFE','PORT','IP','FLAG','MULTIPLE']
+  return data
+
+def dataextrP(dic):
+  key=list(dic.keys())
+  internal_keys= list(dic[key[0]].keys())
+  hour=[]
+  for tup in internal_keys:
+    hour.append(tup[0])
+  hour=list(set(hour))
+  act=dict()
+  for time in hour:
+    val=dict()
+    for value in ["TCP","UDP"]:
+      if ((time,f"{value}") in internal_keys):
+        val[f"Proto_{value}"]=dic[key[0]][(time,f"{value}")]
+        del dic[key[0]][(time,f"{value}")]
+      else: val[f"Proto_{value}"]=0
+    act[time]=val
+    del val
+  data=pd.DataFrame.from_dict(act).T
+  return data
+
+def dataextrO(dic):
+  key=list(dic.keys())
+  internal_keys= list(dic[key[0]].keys())
+  hour=[]
+  for tup in internal_keys:
+    hour.append(tup[0])
+  hour=list(set(hour))
+  act=dict()
+  for time in hour:
+    val=dict()
+    for value in ["O","W","L","M"]:
+      if ((time,f"{value}") in internal_keys):
+        val[f"OS_{value}"]=dic[key[0]][(time,f"{value}")]
+        del dic[key[0]][(time,f"{value}")]
+      else: val[f"OS_{value}"]=0
+    act[time]=val
+    del val
+  data=pd.DataFrame.from_dict(act).T
+  return data
+
+
+def aggr(data):
+  data["hour"] = data["DateTime"].dt.hour
+  grouped = data.groupby('hour').agg(
+       frequency=('Comments', 'count'),
+       ModeS_IP=('Sourceip',lambda x: stats.mode(x)[0]),
+       ModeD_IP=('Destinationip',lambda x: stats.mode(x)[0]),
+       ModeS_Port=('Sourceport',lambda x: stats.mode(x)[0]),
+       ModeD_Port=('Destinationport',lambda x: stats.mode(x)[0]),
+       Mode_TTL=('TTL',lambda x: stats.mode(x)[0]),
+       length=('Length',lambda x: stats.mode(x)[0])
+       )
+  grouped1=data.groupby(['hour','Comments'])[['Sourceip']].count()
+  grouped1.columns = ['Packet']
+  grpComm=dataextrC(grouped1.to_dict())
+  grouped2=data.groupby(['hour','Flags'])[['Sourceip']].count()
+  grouped2.columns = ['Packet']
+  grpFlag=dataextrF(grouped2.to_dict())
+  join_df_1= pd.merge(grpComm, grpFlag,right_index=True, left_index=True, how='inner')
+  grouped3=data.groupby(['hour','Protocol'])[['Sourceip']].count()
+  grouped3.columns = ['Packet']
+  grpPro=dataextrP(grouped3.to_dict())
+  grouped4=data.groupby(['hour','OS'])[['Sourceip']].count()
+  grouped4.columns = ['Packet']
+  grpOS=dataextrO(grouped4.to_dict())
+  join_df_2= pd.merge(grpPro, grpOS,right_index=True, left_index=True, how='inner')
+  join_df_inter= pd.merge(join_df_1, join_df_2,right_index=True, left_index=True, how='inner')
+  join_df_final=pd.merge(join_df_inter,grouped,right_index=True, left_index=True, how='inner')
+  return join_df_final
+
+df=cleandata(df)
 #df=fragment(df)
 #df=labelize(df)
 #df=unlabelize(df)
 #df=unfragment(df)
 #genpie(df)
 #df.head()
+ag=aggr(df)
