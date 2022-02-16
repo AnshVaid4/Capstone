@@ -10,24 +10,22 @@ from scipy import stats
 df = pd.concat(map(pd.read_csv, glob.glob(os.path.join('', "*.csv"))))
 df.to_csv('hell.csv',index=False)
 
-df = pd.read_csv('/content/2022-02-10.csv')
+df = pd.read_csv('/content/2022-02-08.csv')
 Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
 Encoder3=preprocessing.LabelEncoder()
 Encoder4=preprocessing.LabelEncoder()
 
 def cleandata(data):
-  data.columns = ['Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Date','Time','Comments']
+  data.columns = ['Sourceip','Destinationip','Sourceport','Destinationport',
+                  'OS','Flags','Protocol','TTL','Length','Date','Time','Comments']
   data = data[data.Sourceip.str.contains('Sourceip') == False]
   data.dropna(subset=['Sourceip','Sourceport'], inplace=True)
   data["DateTime"]=data.Date+ " "+data.Time
-  if(data['DateTime'].values[0].find("-")>-1):
-    data['DateTime'] = pd.to_datetime(data['DateTime'], format='%d-%m-%Y %H:%M:%S')
-  elif(data['DateTime'].values[0].find("/")>-1):
-    data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y/%m/%d %H:%M:%S')
-    data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+  data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
+  data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
   data.drop(["Date","Time"],axis=1,inplace=True)
-  values = {"Comments": "[SAFE]", "Flags": "NO"}
+  values = {"Comments": "[SAFE]", "Flags": "N"}
   data.fillna(value=values,inplace=True)
   data = data.reindex(columns=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments'])
   for feature in ["Sourceport","Destinationport","TTL","Length"]:
@@ -136,6 +134,7 @@ def dataextrC(dic):
     act[time]=val
     del val
   data=pd.DataFrame.from_dict(act).T
+  #data.columns=['HOUR','SAFE','PORT','IP','FLAG','MULTIPLE']
   return data
 
 def dataextrF(dic):
@@ -237,6 +236,22 @@ def aggr(data):
   join_df_2= pd.merge(grpPro, grpOS,right_index=True, left_index=True, how='inner')
   join_df_inter= pd.merge(join_df_1, join_df_2,right_index=True, left_index=True, how='inner')
   join_df_final=pd.merge(join_df_inter,grouped,right_index=True, left_index=True, how='inner')
+  join_df_final.reset_index(inplace=True)
+  join_df_final["Day"] = data["DateTime"].dt.day
+  join_df_final["Month"] = data["DateTime"].dt.month
+  join_df_final["WeekD"] = data["DateTime"].dt.dayofweek
+  join_df_final.rename(columns={'index': 'hour'}, inplace=True)
+  cols=['Day', 'Month', 'WeekD','hour', 'SAFE', 'PORT', 'IP', 'FLAG', 'MULTIPLE_Com', 'Flag_F',
+        'Flag_A', 'Flag_P', 'Flag_R', 'Flag_S', 'Flag_U', 'Flag_N', 'Flag_Multi',
+        'Proto_TCP', 'Proto_UDP', 'OS_O', 'OS_W', 'OS_L', 'OS_M', 'ModeS_IP', 'ModeD_IP',
+        'ModeS_Port', 'ModeD_Port', 'Mode_TTL', 'length', 'frequency' ]
+  join_df_final = join_df_final.reindex(columns=cols)
+  join_df_final.ffill(inplace=True)
+  join_df_final.bfill(inplace=True)
+  for feature in ['Day', 'Month', 'WeekD','hour', 'SAFE', 'PORT', 'IP', 'FLAG', 'MULTIPLE_Com', 'Flag_F',
+        'Flag_A', 'Flag_P', 'Flag_R', 'Flag_S', 'Flag_U', 'Flag_N', 'Flag_Multi',
+        'Proto_TCP', 'Proto_UDP', 'OS_O', 'OS_W', 'OS_L', 'OS_M','frequency']:
+    join_df_final[feature]=pd.to_numeric(join_df_final[feature], downcast='unsigned')
   return join_df_final
 
 df=cleandata(df)
@@ -247,3 +262,5 @@ df=cleandata(df)
 #genpie(df)
 #df.head()
 ag=aggr(df)
+ag.info()
+ag.head()
