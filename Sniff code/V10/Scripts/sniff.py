@@ -4,8 +4,11 @@ import mysql.connector
 from csv import DictWriter
 import pyfiglet
 from termcolor import colored
+import os
 art = pyfiglet.figlet_format("IDS-Analytics")
 color_art = colored(art, color="green")
+cwd = os.getcwd()
+parent = os.path.dirname(cwd)
 print(art)
 
 con = mysql.connector.connect(
@@ -128,7 +131,7 @@ def process_packet(packet):
     packetlen="NULL"
     packetttl="NULL"
     protocol="NULL"
-    os="NULL"
+    ose="NULL"
     
     flags="NULL"
     comments="NULL"
@@ -155,13 +158,13 @@ def process_packet(packet):
         packetlen=packet[IP].len
         packetttl=packet[IP].ttl
         if packetttl == 128:
-            os="W"
+            ose="W"
         elif packetttl == 64:
-            os="L"
+            ose="L"
         elif packetttl == 60:
-            os="M"
+            ose="M"
         else:
-            os="O"
+            ose="O"
         if monsrcip != "0.0.0.0" and (monsrciplist == None):
             ipobj = IPv4Network(monsrcip)
             if ((IPv4Address(srcip) in ipobj) or (IPv4Address(destip) in ipobj)):
@@ -357,7 +360,7 @@ def process_packet(packet):
         "(id, sourceip, destinationip, sourceport, destinationport, packetlength, packetttl, os, protocol, flags, date, time, comments)"
         "VALUES ('NULL', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
-        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, os, protocol, flags, date, time, comments)
+        dataQuery = (srcip, destip, srcport, destport, packetlen, packetttl, ose, protocol, flags, date, time, comments)
 
         cursor = con.cursor()
         cursor.execute(insQuery, dataQuery)
@@ -367,8 +370,9 @@ def process_packet(packet):
 
     #===========================================================================================================FILE OPERATIONS
 
-    pkt=(srcip, destip,srcport,destport, os, flags,protocol,packetttl,packetlen, date, time, comments)
-    with open(f"{datef}.csv", "a") as file:
+    pkt=(srcip, destip,srcport,destport, ose, flags,protocol,packetttl,packetlen, date, time, comments)
+    dire=parent+"\data\\raw"
+    with open(f"{dire}\{datef}.csv", "a") as file:
         if flag == 0:
             headers = ["Sourceip", "Destinationip", "Sourceport", "Destinationport" , "OS", "Flags","Protocol","TTL","Length", "Date", "Time", "Comments"]
             csv_writer = DictWriter(file, fieldnames=headers)
