@@ -161,45 +161,25 @@ def genMaster(data):
     genpieF(data)
 
 def userin():
-    dirClean=parent+"\data\\cleaned"
-    listOfFilesClean = getListOfFiles(dirClean)
-    print("Enter the start date:")
-    strt=input("dd-mm-yyyy\n")
-    if(len(strt)>0):
-        strt=datetime.strptime(strt, "%d-%m-%Y")
-        strt=datetime.strftime(strt, "%Y-%m-%d")
-    print("Enter the end date:")
-    end=input("dd-mm-yyyy\n")
-    if(len(end)>0):
-        end=datetime.strptime(end, "%d-%m-%Y")
-        end=datetime.strftime(end, "%Y-%m-%d")
-    muldata = list()
-    print(f"{dirClean}\\{strt}.csv")
-    if(strt==end or strt=="" or end==""):
-        if(f"{dirClean}\\{strt}.csv" in listOfFilesClean):
-                data=pd.read_csv(f"{dirClean}\\{strt}.csv")
-                genMaster(data)
-        elif(f"{dirClean}\\{end}.csv" in listOfFilesClean):
-                data=pd.read_csv(f"{dirClean}\\{end}.csv")
-                genMaster(data)
-        else:
-            print("No data found")
+    clean=getListOfFiles(parent+"\data\\cleaned")
+    masterdata=[]
+    for file in clean:
+        masterdata.append(pd.read_csv(file))
+    masterdata=pd.concat(masterdata)
+    masterdata['DateTime'] = pd.to_datetime(masterdata['DateTime'], infer_datetime_format=True,format='%d-%m-%Y %H:%M:%S')
+    strtdate=input("Enter Start Date (dd-mm-yyyy): ")
+    enddate=input("Enter End Date (dd-mm-yyyy): ")
+    if(strtdate=="" and enddate==""):
+        genMaster(masterdata)
+    elif(enddate==""):
+        mask=masterdata['DateTime'] == strtdate
+        masterdata=masterdata[mask]
+        genMaster(masterdata)
     else:
-        s=datetime.strptime(strt, "%Y-%m-%d")
-        e=datetime.strptime(end, "%Y-%m-%d")
-        x=e.date()
-        y=s.date()
-        while(y<=x):
-            if(f"{dirClean}\\{y}.csv" in listOfFilesClean):
-                #strt=datetime.strptime(strt, "%Y-%m-%d")
-               
-                data=pd.read_csv(f"{dirClean}\\{y}.csv")
-                muldata.append(data)
-                y+=timedelta(days=1)
-            if(y==x or y>x):
-                genMaster(pd.concat(muldata))
-                break
-        if(y>x or muldata==[]):
-            print("No data found")
+        mask = (masterdata['DateTime'] > strtdate) & (masterdata['DateTime'] <= enddate)
+        data=masterdata[mask]
+        if(data.empty):
+            print("No Data Found")
+        else:genMaster(data)
 
-userin()              
+userin()
