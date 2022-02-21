@@ -43,10 +43,10 @@ def genpieC(data):
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Comments",bbox_to_anchor =(0.75,0.75))
     if(strt==end):
-        plt.savefig(f"{parent}\data\\charts\\{strt}_Comments.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_Comments.png")
         plt.clf()
     else:
-        plt.savefig(f"{parent}\data\\charts\\{strt}_to_{end}_Comments.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Comments.png")
         plt.clf()
 
 def genpieF(data):
@@ -72,10 +72,10 @@ def genpieF(data):
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Flags",bbox_to_anchor =(0.75,0.75))
     if(strt==end):
-        plt.savefig(f"{parent}\data\\charts\\{strt}_Flags.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_Flags.png")
         plt.clf()
     else:
-        plt.savefig(f"{parent}\data\\charts\\{strt}_to_{end}_Flags.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Flags.png")
         plt.clf()
 
 def genpieP(data):
@@ -97,10 +97,10 @@ def genpieP(data):
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Protocol",bbox_to_anchor =(0.75,0.75))
     if(strt==end):
-        plt.savefig(f"{parent}\data\\charts\\{strt}_Protocol.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_Protocol.png")
         plt.clf()
     else:
-        plt.savefig(f"{parent}\data\\charts\\{strt}_to_{end}_Protocol.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Protocol.png")
         plt.clf()
 
 def genpieO(data):
@@ -122,10 +122,10 @@ def genpieO(data):
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "OS",bbox_to_anchor =(0.75,0.75))
     if(strt==end):
-        plt.savefig(f"{parent}\data\\charts\\{strt}_OS.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_OS.png")
         plt.clf()
     else:
-        plt.savefig(f"{parent}\data\\charts\\{strt}_to_{end}_OS.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_OS.png")
         plt.clf()
 
 def genpieT(data):
@@ -147,10 +147,10 @@ def genpieT(data):
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Time",bbox_to_anchor =(0.75,0.75))
     if(strt==end):
-        plt.savefig(f"{parent}\data\\charts\\{strt}_Time.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_Time.png")
         plt.clf()
     else:
-        plt.savefig(f"{parent}\data\\charts\\{strt}_to_{end}_Time.png")
+        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Time.png")
         plt.clf()
 
 def genMaster(data):

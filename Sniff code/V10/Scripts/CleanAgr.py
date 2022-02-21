@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn import preprocessing
 from scipy import stats
+from datetime import date
+
 Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
 Encoder3=preprocessing.LabelEncoder()
@@ -233,7 +235,12 @@ def aggr(data):
 
 def cleanfldr():
     dirRaw=parent+"\data\\raw"
+    today = date.today()
+    check=today.strftime("%Y-%m-%d")
+    checkfile=dirRaw+"\\"+check+".csv"
     listOfFilesRaw = getListOfFiles(dirRaw)
+    if(checkfile in listOfFilesRaw):
+        listOfFilesRaw.remove(checkfile)
     if not os.path.exists(parent+"\data\\cleaned"):
         os.makedirs(parent+"\data\\cleaned")
     if (len(listOfFilesRaw)>0):
