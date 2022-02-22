@@ -1,2 +1,0 @@
-hour,SAFE,PORT,IP,FLAG,MULTIPLE_Com,Flag_F,Flag_A,Flag_P,Flag_R,Flag_S,Flag_U,Flag_N,Flag_Multi,Proto_TCP,Proto_UDP,OS_O,OS_W,OS_L,OS_M,ModeS_IP,ModeD_IP,ModeS_Port,ModeD_Port,Mode_TTL,length,frequency
-22,0,8,0,0,9,0,8,0,0,0,0,0,9,17,0,11,6,0,0,45.79.230.234,192.168.29.168,80,62580,47,40,17
