@@ -4,6 +4,7 @@ import numpy as np
 from sklearn import preprocessing
 from scipy import stats
 from datetime import date
+import random
 
 Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
