@@ -1,2 +1,3 @@
-Sniff code/data/
-Sniff code/data/IP/
+**/*.csv
+**/*.png
+**/*.xlsx
