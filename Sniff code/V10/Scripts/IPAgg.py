@@ -161,7 +161,7 @@ def aggrIP(data):
   for value in val.keys():
     workbook = writer.book
     worksheet = writer.sheets[value]
-    worksheet.conditional_format(0, 0, val[value][0],val[value][1], {'type': '3_color_scale'})
+    worksheet.conditional_format(0, 0, val[value][0],val[value][1], {'type': 'data_bar','bar_color': '#63C384'})
   writer.save()
   axC=sns.heatmap(grpC.head(10), cmap="YlGnBu",linewidths=.1,annot=True, fmt='d')
   plt.figure(figsize=(15,10)) 
