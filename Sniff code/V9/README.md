@@ -1,1 +1,0 @@
-<h1>Added user input for no customization of rules</h1>
