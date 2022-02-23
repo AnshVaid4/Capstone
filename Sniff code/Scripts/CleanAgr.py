@@ -29,8 +29,14 @@ def cleandata(data):
     data = data[data.Sourceip.str.contains('Sourceip') == False]
     data.dropna(subset=['Sourceip','Sourceport'], inplace=True)
     data["DateTime"]=data.Date+ " "+data.Time
-    data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
-    data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    if(data['DateTime'].iloc[0].find('/')!=-1):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y/%m/%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    elif(len(data['DateTime'].iloc[0].split('-')[0])==4):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y-%m-%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    else:
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%d-%m-%Y %H:%M:%S')
     data.drop(["Date","Time"],axis=1,inplace=True)
     values = {"Comments": "[SAFE]", "Flags": "N"}
     data.fillna(value=values,inplace=True)
@@ -38,7 +44,36 @@ def cleandata(data):
     for feature in ["Sourceport","Destinationport","TTL","Length"]:
         data[feature]=pd.to_numeric(data[feature], downcast='unsigned')
     return data
-
+def randomanipulate(data):
+  rndtim=[]
+  data["DateTime"] = data["DateTime"].astype(str)
+  DT=data['DateTime'].values[0]
+  date=DT.split(" ")[0]
+  data[['Date','Time']]=data.DateTime.str.split(' ', expand=True)
+  data[['hour','Mins','Secs']]=data.Time.str.split(':', expand=True)
+  num_rows=len(data.DateTime)
+  data.drop(["DateTime"],axis=1,inplace=True)
+  randomlist = []
+  for i in range(0,5):
+    n = random.randint(6,9)
+    randomlist.append(n)
+  su=sum(randomlist)
+  for i in range(0,5):
+    randomlist[i]=int((randomlist[i]/su)*num_rows)
+  print(num_rows,sum(randomlist))
+  start_slots=["09","10","11","12","13"]
+  for time in range(0,5):
+    for series in range(randomlist[time]):
+      rndtim.append(start_slots[time])
+  data["hour"]=pd.Series(rndtim)
+  data.ffill(inplace=True)
+  data["DateTime"]=data["Date"]+" "+data["hour"]+":"+data["Mins"]+":"+data["Secs"]
+  data.drop(["Date","Time","hour","Mins","Secs"],axis=1,inplace=True)    
+  data['DateTime'] = pd.to_datetime(data['DateTime'],format='%d-%m-%Y %H:%M:%S')
+  if("Total" not in data.columns.tolist()):
+    cols=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments']
+    data = data.reindex(columns=cols)
+  return data
 def fragment(data):
     data[['Source1','Source2','Source3','Source4']]=data.Sourceip.str.split('.', expand=True)
     data[['dest1','dest2','dest3','dest4']]=data.Destinationip.str.split('.', expand=True)
@@ -187,7 +222,15 @@ def dataextrO(dic):
 def aggr(data):
     data.columns = ['DateTime','Sourceip','Destinationip','Sourceport','Destinationport',
                   'OS','Flags','Protocol','TTL','Length','Comments']
-    data['DateTime'] = pd.to_datetime(data['DateTime'],infer_datetime_format=True)
+    if(data['DateTime'].iloc[0].find('/')!=-1):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y/%m/%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    elif(len(data['DateTime'].iloc[0].split('-')[0])==4):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y-%m-%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    else:
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%d-%m-%Y %H:%M:%S')
+    data['DateTime'] = pd.to_datetime(data['DateTime'])
     data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
     data['DateTime'] = pd.to_datetime(data['DateTime'])
     data["hour"] = data["DateTime"].dt.hour
@@ -217,11 +260,12 @@ def aggr(data):
     join_df_inter= pd.merge(join_df_1, join_df_2,right_index=True, left_index=True, how='inner')
     join_df_final=pd.merge(join_df_inter,grouped,right_index=True, left_index=True, how='inner')
     join_df_final.reset_index(inplace=True)
-    join_df_final["date"]=pd.to_datetime(data['DateTime'],infer_datetime_format=True)
-    join_df_final["date"]=data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
-    join_df_final.set_index('date', inplace=True)
+    join_df_final["DATE"]=pd.to_datetime(data['DateTime'],format='%d-%m-%Y %H:%M:%S')
+    join_df_final["DATE"]=data['DateTime'].dt.strftime('%d-%m-%Y')
+    join_df_final['WEEKDAY']=data['DateTime'].dt.dayofweek
+    #join_df_final.set_index('date', inplace=True)
     join_df_final.rename(columns={'index': 'hour'}, inplace=True)
-    cols=['hour', 'SAFE', 'PORT', 'IP', 'FLAG', 'MULTIPLE_Com', 'Flag_F',
+    cols=['DATE','hour','WEEKDAY', 'SAFE', 'PORT', 'IP', 'FLAG', 'MULTIPLE_Com', 'Flag_F',
             'Flag_A', 'Flag_P', 'Flag_R', 'Flag_S', 'Flag_U', 'Flag_N', 'Flag_Multi',
             'Proto_TCP', 'Proto_UDP', 'OS_O', 'OS_W', 'OS_L', 'OS_M', 'ModeS_IP', 'ModeD_IP',
             'ModeS_Port', 'ModeD_Port', 'Mode_TTL', 'length', 'frequency' ]
@@ -248,9 +292,10 @@ def cleanfldr():
         for file in listOfFilesRaw:
             data=pd.read_csv(file)
             data=cleandata(data)
+            data=randomanipulate(data)
             data.to_csv(parent+"\data\\cleaned\\"+file.split("\\")[-1],index=False)
-        for file in listOfFilesRaw:
-            os.remove(file)
+        #for file in listOfFilesRaw:
+           # os.remove(file)
         
         
 def agrfldr():
