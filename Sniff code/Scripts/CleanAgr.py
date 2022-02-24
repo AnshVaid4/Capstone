@@ -44,36 +44,7 @@ def cleandata(data):
     for feature in ["Sourceport","Destinationport","TTL","Length"]:
         data[feature]=pd.to_numeric(data[feature], downcast='unsigned')
     return data
-def randomanipulate(data):
-  rndtim=[]
-  data["DateTime"] = data["DateTime"].astype(str)
-  DT=data['DateTime'].values[0]
-  date=DT.split(" ")[0]
-  data[['Date','Time']]=data.DateTime.str.split(' ', expand=True)
-  data[['hour','Mins','Secs']]=data.Time.str.split(':', expand=True)
-  num_rows=len(data.DateTime)
-  data.drop(["DateTime"],axis=1,inplace=True)
-  randomlist = []
-  for i in range(0,5):
-    n = random.randint(6,9)
-    randomlist.append(n)
-  su=sum(randomlist)
-  for i in range(0,5):
-    randomlist[i]=int((randomlist[i]/su)*num_rows)
-  print(num_rows,sum(randomlist))
-  start_slots=["09","10","11","12","13"]
-  for time in range(0,5):
-    for series in range(randomlist[time]):
-      rndtim.append(start_slots[time])
-  data["hour"]=pd.Series(rndtim)
-  data.ffill(inplace=True)
-  data["DateTime"]=data["Date"]+" "+data["hour"]+":"+data["Mins"]+":"+data["Secs"]
-  data.drop(["Date","Time","hour","Mins","Secs"],axis=1,inplace=True)    
-  data['DateTime'] = pd.to_datetime(data['DateTime'],format='%d-%m-%Y %H:%M:%S')
-  if("Total" not in data.columns.tolist()):
-    cols=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments']
-    data = data.reindex(columns=cols)
-  return data
+
 def fragment(data):
     data[['Source1','Source2','Source3','Source4']]=data.Sourceip.str.split('.', expand=True)
     data[['dest1','dest2','dest3','dest4']]=data.Destinationip.str.split('.', expand=True)
@@ -292,7 +263,6 @@ def cleanfldr():
         for file in listOfFilesRaw:
             data=pd.read_csv(file)
             data=cleandata(data)
-            data=randomanipulate(data)
             data.to_csv(parent+"\data\\cleaned\\"+file.split("\\")[-1],index=False)
         #for file in listOfFilesRaw:
            # os.remove(file)
