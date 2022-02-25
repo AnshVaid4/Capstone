@@ -9,13 +9,16 @@ from dateutil.easter import *
 from dateutil.rrule import *
 from dateutil.parser import *
 from datetime import *
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 excel_file = f"{parent}\data\\IP\\data.xlsx"
 writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
 if (not(os.path.exists(excel_file))):
-  workbook = xlsxwriter.Workbook(excel_file)
-  worksheet = workbook.add_worksheet()
+    workbook = xlsxwriter.Workbook(excel_file)
+    worksheet = workbook.add_worksheet()
 def getListOfFiles(dirName):
     listOfFile = os.listdir(dirName)# create a list of file and sub directories 
     allFiles = list()# names in the given directory 
@@ -140,22 +143,28 @@ def aggrIP(data):
   grouped1=data.groupby(['Sourceip','Comments'])[['hour']].count()
   grouped1.columns = ['Packet']
   grpC=data_IP_C(grouped1.to_dict())
+  grpC=pd.DataFrame(scaler.fit_transform(grpC),columns=grpC.columns.tolist(),index=grpC.index)
   grpC.to_excel(writer, sheet_name="comments")
   mask_F=data['Flags']!='N'
   data_F=data[mask_F]
   grouped2=data_F.groupby(['Sourceip','Flags'])[['hour']].count()
   grouped2.columns = ['Packet']
   grpF=data_IP_F(grouped2.to_dict())
+  grpF=pd.DataFrame(scaler.fit_transform(grpF),columns=grpF.columns.tolist(),index=grpF.index)
   grpF.to_excel(writer, sheet_name="flags")
   mask_C=data['Comments']!='[SAFE]'
   data_C=data[mask_C]
   grouped3=data_C.groupby(['Sourceip','hour'])[['Comments']].count()
   grouped3.columns = ['Packet']
   grpT=data_IP_T(grouped3.to_dict())
+  grpT=pd.DataFrame(scaler.fit_transform(grpT),columns=grpT.columns.tolist(),index=grpT.index)
   grpT.to_excel(writer, sheet_name="time")
-  grouped4=data_C.groupby(['Sourceip','date'])[['Comments']].count()
+  mask_D=data['Comments']!='[SAFE]'
+  data_D=data[mask_D]
+  grouped4=data_D.groupby(['Sourceip','date'])[['Comments']].count()
   grouped4.columns = ['Packet']
-  grpD=data_IP_T(grouped4.to_dict())
+  grpD=data_IP_D(grouped4.to_dict())
+  grpD=pd.DataFrame(scaler.fit_transform(grpD),columns=grpD.columns.tolist(),index=grpD.index)
   grpD.to_excel(writer, sheet_name="date")
   val={'date':[grpD.shape[0],grpD.shape[1]],'time':[grpT.shape[0],grpT.shape[1]],'comments':[grpC.shape[0],grpC.shape[1]],'flags':[grpF.shape[0],grpF.shape[1]]}
   for value in val.keys():
@@ -163,17 +172,16 @@ def aggrIP(data):
     worksheet = writer.sheets[value]
     worksheet.conditional_format(0, 0, val[value][0],val[value][1], {'type': 'data_bar','bar_color': '#63C384'})
   writer.save()
-  axC=sns.heatmap(grpC.head(10), cmap="YlGnBu",linewidths=.1,annot=True, fmt='d')
-  plt.figure(figsize=(15,10)) 
-  plt.savefig(f"{parent}\data\\heat\\Comments.png")
-  plt.clf()
-  axF=sns.heatmap(grpF.head(10), cmap="rocket_r",linewidths=.1,annot=True, fmt='d')
+  plt.figure(figsize=(20,15)) 
+  #axC=sns.heatmap(grpC.head(10), cmap="YlGnBu",linewidths=.1,annot=True, fmt='f')
+  
+  axF=sns.heatmap(grpF.head(100), cmap="rocket_r",linewidths=.2,annot=True, fmt='.2f')
   plt.savefig(f"{parent}\data\\heat\\Flags.png")
   plt.clf()
-  axT=sns.heatmap(grpT.head(10), cmap="mako_r",linewidths=.1,annot=True, fmt='d')
+  axT=sns.heatmap(grpT.head(100), cmap="mako_r",linewidths=.2,annot=True, fmt='.2f')
   plt.savefig(f"{parent}\data\\heat\\Time.png")
   plt.clf()
-  axD=sns.heatmap(grpD.head(10), cmap="magma_r",linewidths=.1,annot=True, fmt='d')
+  axD=sns.heatmap(grpD.head(100), cmap="magma_r",linewidths=.2,annot=True, fmt='.2f')
   plt.savefig(f"{parent}\data\\heat\\Date.png")
   plt.clf()
 

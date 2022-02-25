@@ -166,7 +166,7 @@ def userin():
     for file in clean:
         masterdata.append(pd.read_csv(file))
     masterdata=pd.concat(masterdata)
-    masterdata['DateTime'] = pd.to_datetime(masterdata['DateTime'],format='%d-%m-%Y %H:%M:%S')
+    masterdata['DateTime'] = pd.to_datetime(masterdata['DateTime'],format='%Y-%m-%d %H:%M:%S')
     strtdate=input("Enter Start Date (dd-mm-yyyy): ")
     enddate=input("Enter End Date (dd-mm-yyyy): ")
     if(strtdate=="" and enddate==""):
