@@ -12,6 +12,7 @@ from statsmodels.tsa.arima.model import ARIMA
 from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from pmdarima import auto_arima
 import warnings
 
 warnings.filterwarnings("ignore")  
@@ -33,7 +34,6 @@ masterdata=[]
 for file in agg:
     masterdata.append(pd.read_csv(file))
 masterdata=pd.concat(masterdata)
-#masterdata.to_csv("temp.csv")
 
 
 def predict_package():
@@ -61,7 +61,8 @@ def predict_package():
     df_t.DateTime= pd.to_datetime(df_t.DateTime,format='%d-%m-%Y %H:%M')
     df_t.DateTime=df_t.DateTime.dt.strftime('%d-%m-%Y %H:%M')
     df_t.set_index(df_t.DateTime,inplace=True)
-    model=ARIMA(df_t['frequency'],order=(2,0,2))
+    autoorder=auto_arima(df_t['frequency'],suppress_warning=True).get_params()
+    model=ARIMA(df_t['frequency'],order=autoorder['order'])
     model_fit=model.fit()
     delta=timedelta(hours=1)
     delday=timedelta(days=1)
@@ -105,7 +106,8 @@ def predict_violation():
     df_t.DateTime= pd.to_datetime(df_t.DateTime,format='%d-%m-%Y %H:%M')
     df_t.DateTime=df_t.DateTime.dt.strftime('%d-%m-%Y %H:%M')
     df_t.set_index(df_t.DateTime,inplace=True)
-    model=ARIMA(df_t['violation'],order=(0,1,2))
+    autoorder=auto_arima(df_t['violation'],suppress_warning=True).get_params()
+    model=ARIMA(df_t['violation'],order=autoorder['order'])
     model_fit=model.fit()
     delta=timedelta(hours=1)
     delday=timedelta(days=1)
@@ -121,5 +123,6 @@ def predict_violation():
     plt.xlabel('Time')
     plt.ylabel('Violation')
     plt.savefig(f"{parent}\\data\\AI\\violation.png")
+    
 predict_violation()
 predict_package()
