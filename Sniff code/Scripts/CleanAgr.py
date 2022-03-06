@@ -5,13 +5,9 @@ from sklearn import preprocessing
 from scipy import stats
 from datetime import date
 import random
-from time import sleep
-from tqdm import tqdm
 import warnings
 
 warnings.filterwarnings("ignore")
-for i in tqdm(range(100)):
-    sleep(0.02)  
 Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
 Encoder3=preprocessing.LabelEncoder()

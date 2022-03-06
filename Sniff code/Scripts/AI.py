@@ -13,12 +13,8 @@ from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import warnings
-from time import sleep
-from tqdm import tqdm
 
-warnings.filterwarnings("ignore")
-for i in tqdm(range(100)):
-    sleep(0.02)  
+warnings.filterwarnings("ignore")  
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 

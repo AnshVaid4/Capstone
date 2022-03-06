@@ -13,12 +13,8 @@ from dateutil.parser import *
 from datetime import *
 from sklearn.preprocessing import MinMaxScaler
 import warnings
-from time import sleep
-from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
-for i in tqdm(range(100)):
-    sleep(0.02)  
 scaler = MinMaxScaler()
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)

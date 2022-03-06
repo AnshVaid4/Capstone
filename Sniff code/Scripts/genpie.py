@@ -9,12 +9,9 @@ from dateutil.rrule import *
 from dateutil.parser import *
 from datetime import *
 import warnings
-from time import sleep
-from tqdm import tqdm
+
 
 warnings.filterwarnings("ignore")
-for i in tqdm(range(100)):
-    sleep(0.02)  
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 def getListOfFiles(dirName):
@@ -143,7 +140,7 @@ def genpieT(data):
     plt.clf()
 
 
-def genMaster(data):
+def genMaster(data): 
     genpieT(data)
     genpieO(data)
     genpieP(data)
@@ -189,6 +186,7 @@ def userin():
     masterdata['DateTime'] = pd.to_datetime(masterdata['DateTime'],format='%Y-%m-%d %H:%M:%S')
     strtdate=input("Enter Start Date (dd-mm-yyyy): ")
     enddate=input("Enter End Date (dd-mm-yyyy): ")
+    
     if(strtdate=="" and enddate==""):
         genMaster(masterdata)
     elif(enddate==""):
