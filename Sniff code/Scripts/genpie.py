@@ -8,6 +8,13 @@ from dateutil.easter import *
 from dateutil.rrule import *
 from dateutil.parser import *
 from datetime import *
+import warnings
+from time import sleep
+from tqdm import tqdm
+
+warnings.filterwarnings("ignore")
+for i in tqdm(range(100)):
+    sleep(0.02)  
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 def getListOfFiles(dirName):
@@ -42,12 +49,9 @@ def genpieC(data):
     colors = sns.color_palette('pastel')
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Comments",bbox_to_anchor =(0.75,0.75))
-    if(strt==end):
-        plt.savefig(f"{parent}\data\\pie\\{strt}_Comments.png")
-        plt.clf()
-    else:
-        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Comments.png")
-        plt.clf()
+    plt.savefig(f"{parent}\data\\pie\\Comments.png")
+    plt.clf()
+    
 
 def genpieF(data):
     data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
@@ -71,12 +75,8 @@ def genpieF(data):
     colors = sns.color_palette('hls')
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Flags",bbox_to_anchor =(0.75,0.75))
-    if(strt==end):
-        plt.savefig(f"{parent}\data\\pie\\{strt}_Flags.png")
-        plt.clf()
-    else:
-        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Flags.png")
-        plt.clf()
+    plt.savefig(f"{parent}\data\\pie\\Flags.png")
+    plt.clf()
 
 def genpieP(data):
     data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
@@ -96,12 +96,9 @@ def genpieP(data):
     colors = sns.color_palette('Paired')
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Protocol",bbox_to_anchor =(0.75,0.75))
-    if(strt==end):
-        plt.savefig(f"{parent}\data\\pie\\{strt}_Protocol.png")
-        plt.clf()
-    else:
-        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Protocol.png")
-        plt.clf()
+    plt.savefig(f"{parent}\data\\pie\\Protocol.png")
+    plt.clf()
+
 
 def genpieO(data):
     data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
@@ -121,12 +118,8 @@ def genpieO(data):
     colors = sns.color_palette('PuOr')
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "OS",bbox_to_anchor =(0.75,0.75))
-    if(strt==end):
-        plt.savefig(f"{parent}\data\\pie\\{strt}_OS.png")
-        plt.clf()
-    else:
-        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_OS.png")
-        plt.clf()
+    plt.savefig(f"{parent}\data\\pie\\OS.png")
+    plt.clf()
 
 def genpieT(data):
     data['DateTime'] = pd.to_datetime(data['DateTime'], infer_datetime_format=True)
@@ -146,12 +139,9 @@ def genpieT(data):
     colors = sns.color_palette("rocket")
     plt.pie(pie_val.values(), labels = pie_val.keys(), colors = colors, autopct='%.0f%%',explode = exp, shadow = True)
     plt.legend(title = "Time",bbox_to_anchor =(0.75,0.75))
-    if(strt==end):
-        plt.savefig(f"{parent}\data\\pie\\{strt}_Time.png")
-        plt.clf()
-    else:
-        plt.savefig(f"{parent}\data\\pie\\{strt}_to_{end}_Time.png")
-        plt.clf()
+    plt.savefig(f"{parent}\data\\pie\\Time.png")
+    plt.clf()
+
 
 def genMaster(data):
     genpieT(data)
@@ -159,6 +149,28 @@ def genMaster(data):
     genpieP(data)
     genpieC(data)
     genpieF(data)
+    
+def cleandata(data):
+    data.columns = ['Sourceip','Destinationip','Sourceport','Destinationport',
+                  'OS','Flags','Protocol','TTL','Length','Date','Time','Comments']
+    data = data[data.Sourceip.str.contains('Sourceip') == False]
+    data.dropna(subset=['Sourceip','Sourceport'], inplace=True)
+    data["DateTime"]=data.Date+ " "+data.Time
+    if(data['DateTime'].iloc[0].find('/')!=-1):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y/%m/%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    elif(len(data['DateTime'].iloc[0].split('-')[0])==4):
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%Y-%m-%d %H:%M:%S')
+        data['DateTime'] = data['DateTime'].dt.strftime('%d-%m-%Y %H:%M:%S')
+    else:
+        data['DateTime'] = pd.to_datetime(data['DateTime'], format='%d-%m-%Y %H:%M:%S')
+    data.drop(["Date","Time"],axis=1,inplace=True)
+    values = {"Comments": "[SAFE]", "Flags": "N"}
+    data.fillna(value=values,inplace=True)
+    data = data.reindex(columns=['DateTime','Sourceip','Destinationip','Sourceport','Destinationport','OS','Flags','Protocol','TTL','Length','Comments'])
+    for feature in ["Sourceport","Destinationport","TTL","Length"]:
+        data[feature]=pd.to_numeric(data[feature], downcast='unsigned')
+    return data
 
 def userin():
     clean=getListOfFiles(parent+"\data\\cleaned")
@@ -166,6 +178,14 @@ def userin():
     for file in clean:
         masterdata.append(pd.read_csv(file))
     masterdata=pd.concat(masterdata)
+    dirRaw=parent+"\data\\raw"
+    today = date.today()
+    check=today.strftime("%Y-%m-%d")
+    checkfile=dirRaw+"\\"+check+".csv"
+    if os.path.exists(checkfile):
+        today_df=pd.read_csv(checkfile)
+        today_df=cleandata(today_df)
+        masterdata=pd.concat([masterdata,today_df])
     masterdata['DateTime'] = pd.to_datetime(masterdata['DateTime'],format='%Y-%m-%d %H:%M:%S')
     strtdate=input("Enter Start Date (dd-mm-yyyy): ")
     enddate=input("Enter End Date (dd-mm-yyyy): ")

@@ -12,6 +12,13 @@ from statsmodels.tsa.arima.model import ARIMA
 from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+import warnings
+from time import sleep
+from tqdm import tqdm
+
+warnings.filterwarnings("ignore")
+for i in tqdm(range(100)):
+    sleep(0.02)  
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 
@@ -30,6 +37,8 @@ masterdata=[]
 for file in agg:
     masterdata.append(pd.read_csv(file))
 masterdata=pd.concat(masterdata)
+#masterdata.to_csv("temp.csv")
+
 
 def predict_package():
     df=masterdata.copy()
@@ -56,8 +65,7 @@ def predict_package():
     df_t.DateTime= pd.to_datetime(df_t.DateTime,format='%d-%m-%Y %H:%M')
     df_t.DateTime=df_t.DateTime.dt.strftime('%d-%m-%Y %H:%M')
     df_t.set_index(df_t.DateTime,inplace=True)
-    df_t.info()
-    model=ARIMA(df_t['frequency'],order=(1,1,0))
+    model=ARIMA(df_t['frequency'],order=(2,0,2))
     model_fit=model.fit()
     delta=timedelta(hours=1)
     delday=timedelta(days=1)
@@ -70,6 +78,8 @@ def predict_package():
     plt.plot(model_fit.forecast(steps=5),label='Forecast')
     plt.legend(loc='best')
     plt.xticks(rotation=90,fontsize=6)
+    plt.xlabel('Time')
+    plt.ylabel('packets')
     plt.savefig(f"{parent}\\data\\AI\\packets.png")
     
 
@@ -99,8 +109,7 @@ def predict_violation():
     df_t.DateTime= pd.to_datetime(df_t.DateTime,format='%d-%m-%Y %H:%M')
     df_t.DateTime=df_t.DateTime.dt.strftime('%d-%m-%Y %H:%M')
     df_t.set_index(df_t.DateTime,inplace=True)
-    df_t.info()
-    model=ARIMA(df_t['violation'],order=(1,2,0))
+    model=ARIMA(df_t['violation'],order=(0,1,2))
     model_fit=model.fit()
     delta=timedelta(hours=1)
     delday=timedelta(days=1)
@@ -113,5 +122,8 @@ def predict_violation():
     plt.plot(model_fit.forecast(steps=5),label='Forecast')
     plt.legend(loc='best')
     plt.xticks(rotation=90,fontsize=6)
+    plt.xlabel('Time')
+    plt.ylabel('Violation')
     plt.savefig(f"{parent}\\data\\AI\\violation.png")
 predict_violation()
+predict_package()

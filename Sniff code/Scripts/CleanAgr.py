@@ -5,7 +5,13 @@ from sklearn import preprocessing
 from scipy import stats
 from datetime import date
 import random
+from time import sleep
+from tqdm import tqdm
+import warnings
 
+warnings.filterwarnings("ignore")
+for i in tqdm(range(100)):
+    sleep(0.02)  
 Encoder1=preprocessing.LabelEncoder()
 Encoder2=preprocessing.LabelEncoder()
 Encoder3=preprocessing.LabelEncoder()
@@ -264,8 +270,8 @@ def cleanfldr():
             data=pd.read_csv(file)
             data=cleandata(data)
             data.to_csv(parent+"\data\\cleaned\\"+file.split("\\")[-1],index=False)
-        #for file in listOfFilesRaw:
-           # os.remove(file)
+        for file in listOfFilesRaw:
+            os.remove(file)
         
         
 def agrfldr():
