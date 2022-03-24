@@ -45,15 +45,14 @@
         <big><p>This site is created by</p></big>
         <table style="width:100%; border-spacing:0;">
           <tr><th>Person</th><th>Reg_no.</th></tr>
-           <tr><td><a href="https://www.facebook.com/profile.php?id=100007124138550">Ajit Singh</a></td><td></td></tr>
-           <tr><td><a href="https://www.facebook.com/dazzling.diaz?fref=pb&hc_location=friends_tab">Harjaspreet singh nagi </a></td><td></td></tr>
-          <tr><td><a href="#">Rakesh yadav</td><td> </td></tr>
+          </td></tr>
+          <tr><td><a href="#">Rakesh Yadav</td><td>11802799</td></tr>
            <tr><td><a href="https://www.facebook.com/rajatmaheswari"> Rajat Maheshwari</a></td><td>11807504 </td></tr>
             
             
         </table>
          <h3>for further information contact us at:-</h3><br>
-         <p><big><a href="mailto:rajatmaheshwari72@rediffmail.com">Email us</a><br> Call us on :-8218335698</big></p>
+         <p><big><a href="mailto:rakesh.11802799@gmail.com">Email us</a><br> Call us on :-6387162562</big></p>
             
             
       </div>
