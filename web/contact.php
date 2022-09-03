@@ -47,6 +47,7 @@
           <tr><th>Person</th><th>Reg_no.</th></tr>
           </td></tr>
           <tr><td><a href="#">Rakesh Yadav</td><td>11802799</td></tr>
+          <tr><td><a href="#">Ansh Vaid</td><td>11805238</td></tr>
            <tr><td><a href="https://www.facebook.com/rajatmaheswari"> Rajat Maheshwari</a></td><td>11807504 </td></tr>
             
             
